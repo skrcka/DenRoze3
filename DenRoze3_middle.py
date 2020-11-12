@@ -1,32 +1,24 @@
 from datetime import datetime
-from DenRoze3_base_classes import Item
-from DenRoze3_base_classes import BillItem
-from DenRoze3_base_classes import Order
-from DenRoze3_base_classes import Bill
-from DenRoze3_base_classes import User
+from DenRoze3_base_classes import Item, BillItem, Order, Bill, User
 from DenRoze3_bottom import Local_db
 
 
 class Reader_Writer:
     def __init__(self):
         local_db = Local_db()
-
     def load_users_local(self, users):
-        local_db.load_users(users)
-
+        this.local_db.load_users(users)
     def load_bills_local(self, bills):
-        local_db.load_bills(bills)
+        this.local_db.load_bills(bills)
     def write_bills_local(self, bills):
-        local_db.write_bills(bills)
-
+        this.local_db.write_bills(bills)
     def load_stock_local(self, stock):
-        local_db.load_stock(stock)
+        this.local_db.load_stock(stock)
     def write_stock_local(self, stock):
-        local_db.write_bills(bills)
-
+        this.local_db.write_bills(bills)
     def write_local_and_clear(self, stock, bills):
-        local_db.write_bills(bills)
-        local_db.write_stock(stock)
+        this.local_db.write_bills(bills)
+        this.local_db.write_stock(stock)
         stock.clear()
         bills.clear()
 

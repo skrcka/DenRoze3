@@ -1,8 +1,5 @@
 from pprint import pprint as print
-from DenRoze3_middle import Reader_Writer
-from DenRoze3_middle import Stock
-from DenRoze3_middle import Bills
-from DenRoze3_middle import Users
+from DenRoze3_middle import Reader_Writer, Stock, Bills, Users
 
 rw = Reader_Writer()
 stock = Stock()
