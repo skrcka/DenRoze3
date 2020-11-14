@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator
 #import pyodbc
 #from xml.etree import ElementTree
 
@@ -15,6 +16,7 @@ class Local_db:
             data = json.load(file)
         for item in data:
             stock.load(item["id"], item["name"], item["code"], item["price"], item["dph"], item["count"], item["mincount"], item["weight"], item["is_age_restricted"])
+        stock.idcreator.setmaxid(stock)
     def load_users(self, users):
         with open(self.path_to_users, "r") as file:
             data = json.load(file)
@@ -31,6 +33,7 @@ class Local_db:
             b.total = bill["total"]
             b.payment_method = bill["payment_method"]
             bills.add(b)
+        bills.idcreator.setmaxid(bills)
     def write_bills(self, bills):
         with open(self.path_to_bills, "w+") as file:
             bill_list = []

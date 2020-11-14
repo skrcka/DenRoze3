@@ -1,7 +1,20 @@
 import os
 from datetime import datetime
-from pprint import pprint as print
+from pprint import pprint
 
+
+class IDcreator:
+    def __init__(self):
+        self.id = 0
+    def getid(self):
+        self.id += 1
+        return self.id
+    def setmaxid(self, var):
+        maxid = 0
+        for v in var:
+            if v.id > maxid:
+                maxid = v.id
+        self.id = maxid
 
 class Item:
     def __init__(self, id, name, code, price, dph, count, mincount, weight, is_age_restricted):
@@ -80,6 +93,15 @@ class Bill:
             }
             bill_dict['items'].append(billitem_dict)
         return bill_dict
+    def print(self):
+        print("****************************************************")
+        print("Uctenka: [%d] Datum a cas: %s" % (self.id, self.date))
+        print("Zbozi: [id] nazev dph mnozstvi cena cena_celkem")
+        for i in self.items:
+            print('\t[%d] %s %d %d %.2f %.2f' % (i.item.id, i.item.name, i.item.dph, i.count, i.item.price, i.item.price * i.count))
+        print("Celkova cena: %.2f" % self.total)
+        print("EET kod: %s" % self.eet)
+        print("****************************************************")
 
 class User:
     def __init__(self, id, name, password, is_employee, is_admin):
