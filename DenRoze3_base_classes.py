@@ -34,12 +34,16 @@ class BillItem:
         self.count = count
 
 class Order:
-    def __init__(self, user):
-        self.user = user
+    def __init__(self, id):
+        self.id = id
+        self.user = None
         self.items = []
         self.total = 0
         self.total_weight = 0
         self.date = datetime.now()
+        self.payment_method = ""
+        self.shipping_method = ""
+        self.address = ""
     def add_item(self, item, count):
         self.total += item.price * count
         self.total_weight += item.weight * count
@@ -48,6 +52,47 @@ class Order:
         self.total -= self.items[id].item.price * self.items[id].count
         self.total_weight -= self.items[id].item.weight * self.items[id].count
         del self.items[id]
+    def print(self):
+        print("****************************************************")
+        print("Objednavka: [%d] Datum a cas: %s" % (self.id, self.date))
+        print("Zbozi: [id] nazev dph mnozstvi cena cena_celkem")
+        for i in self.items:
+            print('\t[%d] %s %d %d %.2f %.2f' % (i.item.id, i.item.name, i.item.dph, i.count, i.item.price, i.item.price * i.count))
+        print("Celkova cena: %.2f" % self.total)
+        print("Celkova vaha: %.2f" % self.total_weight)
+        print("Shipping method: %s" % self.shipping_method)
+        print("Address: %s" % self.address)
+        print("****************************************************")
+    def transform(self):
+        order_dict = {
+            'id': self.id,
+            'user': self.user,
+            'items': [],
+            'total': self.total,
+            'total_weight': self.total_weight,
+            'date': self.date,
+            'payment_method': self.payment_method,
+            'shipping_method': self.shipping_method,
+            'address': self.address
+        }
+        for billitem in self.items:
+            item_dict = {
+                "id": billitem.item.id,
+                "name": billitem.item.name,
+                "code": billitem.item.code,
+                "price": billitem.item.price,
+                "dph": billitem.item.dph,
+                "count": billitem.item.count,
+                "mincount": billitem.item.mincount,
+                "weight": billitem.item.weight,
+                "is_age_restricted": billitem.item.is_age_restricted,
+            }
+            billitem_dict = {
+                "item": item_dict,
+                "count": billitem.count
+            }
+            order_dict['items'].append(billitem_dict)
+        return order_dict
 
 class Bill:
     def __init__(self, id):
@@ -104,9 +149,12 @@ class Bill:
         print("****************************************************")
 
 class User:
-    def __init__(self, id, name, password, is_employee, is_admin):
+    def __init__(self, id, name, real_name, password, phone, email, is_employee, is_manager):
         self.id = id
         self.name = name
+        self.real_name = real_name
         self.password = password
+        self.phone = phone
+        self.email = email
         self.is_employee = is_employee
-        self.is_admin = is_admin
+        self.is_manager = is_manager

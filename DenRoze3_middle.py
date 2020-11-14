@@ -22,6 +22,28 @@ class Reader_Writer:
         stock.clear()
         bills.clear()
 
+class Orders:
+    def __init__(self):
+        self.orders = []
+        self.idcreator = IDcreator()
+    def new(self, user):
+        order = Order(self.idcreator.getid())
+        self.orders.append(order)
+        return order
+    def add(self, order):
+        self.orders.append(order)
+    def remove(self, id):
+        del self.orders[id]
+    def __setitem__(self, number, data):
+        self.orders[number] = data
+    def __getitem__(self, number):
+        return self.orders[number]
+    def clear(self):
+        self.orders.clear()
+    def print(self):
+        for o in self.orders:
+            o.print()
+
 class Bills:
     def __init__(self):
         self.bills = []
