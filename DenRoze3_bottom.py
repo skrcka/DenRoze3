@@ -7,14 +7,20 @@ from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator
 
 class Local_db:
     def __init__(self):
-        self.path_to_stock = os.path.abspath(os.path.join('data', 'stock.json'))
-        self.path_to_bills = os.path.abspath(os.path.join('data', "bills-{}.json".format(datetime.today().date())))
-        self.path_to_orders = os.path.abspath(os.path.join('data', "orders-{}.json".format(datetime.today().date())))
-        self.path_to_changes = os.path.abspath(os.path.join('data', 'changes.json'))
+        self.path_to_stock_history = os.path.abspath(os.path.join('data', 'stock', 'stock-{}.json'.format(datetime.today().date())))
+        self.path_to_bills = os.path.abspath(os.path.join('data', 'bills', "bills-{}.json".format(datetime.today().date())))
+        self.path_to_orders_history = os.path.abspath(os.path.join('data', 'orders', "orders-{}.json".format(datetime.today().date())))
+        self.path_to_changes = os.path.abspath(os.path.join('data', 'changes', 'changes-{}.json'.format(datetime.today().date())))
+        self.path_to_users_history = os.path.abspath(os.path.join('data', 'users', 'users-{}.json'.format(datetime.today().date())))
         self.path_to_users = os.path.abspath(os.path.join('data', 'users.json'))
+        self.path_to_stock = os.path.abspath(os.path.join('data', 'stock.json'))
+        self.path_to_orders = os.path.abspath(os.path.join('data', "orders.json"))
+        self.timeshift = False
+
     def timeshift(self, newdate):
-        self.path_to_bills = os.path.abspath(os.path.join('data', "bills-{}.json".format(newdate.date())))
-        self.path_to_orders = os.path.abspath(os.path.join('data', "orders-{}.json".format(newdate.date())))
+        self.path_to_bills = os.path.abspath(os.path.join('data', 'bills', "bills-{}.json".format(newdate.date())))
+        self.path_to_orders = os.path.abspath(os.path.join('data', 'orders', "orders-{}.json".format(newdate.date())))
+        self.timeshift = True
 
     def load_stock(self, stock):
         if not os.path.isfile(self.path_to_stock):
