@@ -1,10 +1,11 @@
-from pprint import pprint as print
-from DenRoze3_middle import Reader_Writer, Stock, Bills, Users
+from pprint import pprint
+from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders
 from DenRoze3_base_classes import Item, BillItem, Bill
 
 rw = Reader_Writer()
 stock = Stock()
 bills = Bills()
+orders = Orders()
 #rw.load_stock(stock)
 #rw.load_bills(bills)
 #stock.load(0, "vejce", "vesnica", 10, 21, 100, 10, 50, False)
@@ -21,3 +22,7 @@ rw.load_stock_local(stock)
 #rw.write_bills_local(bills)
 rw.load_bills_local(bills)
 bills.print()
+orders.new()
+orders[0].add_item(stock[0], 5)
+rw.write_orders_local(orders)
+orders.print()

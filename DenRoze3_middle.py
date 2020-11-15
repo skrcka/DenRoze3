@@ -6,8 +6,14 @@ from DenRoze3_bottom import Local_db
 class Reader_Writer:
     def __init__(self):
         self.local_db = Local_db()
+    def load_orders_local(self, orders):
+        self.local_db.load_orders(orders)
+    def write_orders_local(self, orders):
+        self.local_db.write_orders(orders)
     def load_users_local(self, users):
         self.local_db.load_users(users)
+    def write_users_local(self, users):
+        self.local_db.write_users(users)
     def load_bills_local(self, bills):
         self.local_db.load_bills(bills)
     def write_bills_local(self, bills):
@@ -26,7 +32,7 @@ class Orders:
     def __init__(self):
         self.orders = []
         self.idcreator = IDcreator()
-    def new(self, user):
+    def new(self):
         order = Order(self.idcreator.getid())
         self.orders.append(order)
         return order

@@ -44,6 +44,7 @@ class Order:
         self.payment_method = ""
         self.shipping_method = ""
         self.address = ""
+        self.status = ""
     def add_item(self, item, count):
         self.total += item.price * count
         self.total_weight += item.weight * count
@@ -55,6 +56,7 @@ class Order:
     def print(self):
         print("****************************************************")
         print("Objednavka: [%d] Datum a cas: %s" % (self.id, self.date))
+        print("Status %s" % self.status)
         print("Zbozi: [id] nazev dph mnozstvi cena cena_celkem")
         for i in self.items:
             print('\t[%d] %s %d %d %.2f %.2f' % (i.item.id, i.item.name, i.item.dph, i.count, i.item.price, i.item.price * i.count))
@@ -73,7 +75,8 @@ class Order:
             'date': self.date,
             'payment_method': self.payment_method,
             'shipping_method': self.shipping_method,
-            'address': self.address
+            'address': self.address,
+            'status': self.status
         }
         for billitem in self.items:
             item_dict = {

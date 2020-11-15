@@ -9,6 +9,7 @@ class Local_db:
     def __init__(self):
         self.path_to_stock = os.path.abspath(os.path.join('data', 'stock.json'))
         self.path_to_bills = os.path.abspath(os.path.join('data', "bills-{}.json".format(datetime.today().date())))
+        self.path_to_orders = os.path.abspath(os.path.join('data', "orders-{}.json".format(datetime.today().date())))
         self.path_to_changes = os.path.abspath(os.path.join('data', 'changes.json'))
         self.path_to_users = os.path.abspath(os.path.join('data', 'users.json'))
 
@@ -51,6 +52,7 @@ class Local_db:
             o.payment_method = order["payment_method"]
             o.shipping_method = order["shipping_method"]
             o.address = order["address"]
+            o.status = order["status"]
             orders.add(o)
         bills.idcreator.setmaxid(bills)
     def write_orders(self, orders):
@@ -58,7 +60,7 @@ class Local_db:
             order_list = []
             for order in orders:
                 order_list.append(order.transform())
-            json.dump(bill_list, file, indent=2, default=str)
+            json.dump(order_list, file, indent=2, default=str)
 
     def load_bills(self, bills):
         with open(self.path_to_bills, "r") as file:
