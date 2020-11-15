@@ -16,6 +16,11 @@ class IDcreator:
                 maxid = v.id
         self.id = maxid
 
+class DateCreator:
+    def getdate(day, month, year):
+        newdate = datetime(year, month, day)
+        return newdate
+
 class Item:
     def __init__(self, id, name, code, price, dph, count, mincount, weight, is_age_restricted):
         self.id = id

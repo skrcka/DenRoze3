@@ -12,6 +12,9 @@ class Local_db:
         self.path_to_orders = os.path.abspath(os.path.join('data', "orders-{}.json".format(datetime.today().date())))
         self.path_to_changes = os.path.abspath(os.path.join('data', 'changes.json'))
         self.path_to_users = os.path.abspath(os.path.join('data', 'users.json'))
+    def timeshift(self, newdate):
+        self.path_to_bills = os.path.abspath(os.path.join('data', "bills-{}.json".format(newdate.date())))
+        self.path_to_orders = os.path.abspath(os.path.join('data', "orders-{}.json".format(newdate.date())))
 
     def load_stock(self, stock):
         if not os.path.isfile(self.path_to_stock):

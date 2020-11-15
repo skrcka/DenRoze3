@@ -23,11 +23,24 @@ class Reader_Writer:
         self.local_db.load_stock(stock)
     def write_stock_local(self, stock):
         self.local_db.write_stock(stock)
-    def write_local_and_clear(self, stock, bills):
+    def write_local_and_clear(self, stock, bills, orders, users):
         self.local_db.write_bills(bills)
         self.local_db.write_stock(stock)
+        self.local_db.write_orders(orders)
+        self.local_db.write_users(users)
         stock.clear()
         bills.clear()
+        orders.clear()
+        users.clear()
+    def load_all_local(self, stock, bills, orders, users):
+        self.local_db.load_stock(stock)
+        self.local_db.load_bills(bills)
+        self.local_db.load_orders(orders)
+        self.local_db.load_users(users)
+    def timeshift(self, newdate, stock, bills, orders, users):
+        self.write_local_and_clear(stock, bills, orders, users)
+        self.local_db.timeshift(newdate)
+        self.load_all_local(stock, bills, orders, users)
 
 class Orders:
     def __init__(self):
@@ -86,6 +99,8 @@ class Users:
         self.users[number] = data
     def __getitem__(self, number):
         return self.users[number]
+    def clear(self):
+        self.users.clear()
 
 class Stock:
     def __init__(self):
