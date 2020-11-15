@@ -113,6 +113,8 @@ class Bill:
         self.payment_method = ""
         self.eet = ""
         self.is_sale = True
+    def change_type(self):
+        self.is_sale = not self.is_sale
     def add_item(self, item, count):
         self.items.append(BillItem(item, count))
         self.total += item.price * count
