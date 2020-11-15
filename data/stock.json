@@ -4,7 +4,7 @@
         "code": "vesnica",
         "price": 10,
         "dph": 21,
-        "count": 100,
+        "count": 9,
         "mincount": 10,
         "weight": 50,
         "is_age_restricted": false

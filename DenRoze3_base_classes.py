@@ -27,6 +27,8 @@ class Item:
         self.mincount = mincount
         self.weight = weight
         self.is_age_restricted = is_age_restricted
+    def print(self):
+        print("[{}]{}, {}, {}({}), {}, {}, {}, {}".format(self.id, self.name, self.code, self.price, self.dph, self.count, self.mincount, self.weight, self.is_age_restricted))
 
 class BillItem:
     def __init__(self, item, count):

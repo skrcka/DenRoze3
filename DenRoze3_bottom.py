@@ -14,6 +14,8 @@ class Local_db:
         self.path_to_users = os.path.abspath(os.path.join('data', 'users.json'))
 
     def load_stock(self, stock):
+        if not os.path.isfile(self.path_to_stock):
+            return
         with open(self.path_to_stock, "r") as file:
             data = json.load(file)
         for item in data:
@@ -27,6 +29,8 @@ class Local_db:
             json.dump(items, file, indent=2)
 
     def load_users(self, users):
+        if not os.path.isfile(self.path_to_users):
+            return
         with open(self.path_to_users, "r") as file:
             data = json.load(file)
         for user in data:
@@ -39,6 +43,8 @@ class Local_db:
             json.dump(usrs, file, indent=2)
 
     def load_orders(self, orders):
+        if not os.path.isfile(self.path_to_orders):
+            return
         with open(self.path_to_orders, "r") as file:
             data = json.load(file)
         for order in data:
@@ -54,7 +60,7 @@ class Local_db:
             o.address = order["address"]
             o.status = order["status"]
             orders.add(o)
-        bills.idcreator.setmaxid(bills)
+        orders.idcreator.setmaxid(orders)
     def write_orders(self, orders):
         with open(self.path_to_orders, "w+") as file:
             order_list = []
@@ -63,6 +69,8 @@ class Local_db:
             json.dump(order_list, file, indent=2, default=str)
 
     def load_bills(self, bills):
+        if not os.path.isfile(self.path_to_bills):
+            return
         with open(self.path_to_bills, "r") as file:
             data = json.load(file)
         for bill in data:
