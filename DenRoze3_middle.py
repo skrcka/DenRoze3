@@ -74,7 +74,7 @@ class Bills:
         return bill
     def add(self, bill):
         self.bills.append(bill)
-    def remove(self, id):
+    def delete(self, id):
         del self.bills[id]
     def __setitem__(self, number, data):
         self.bills[number] = data

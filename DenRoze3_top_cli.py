@@ -64,7 +64,26 @@ while(app_on):
             print("Wrong input!")
             continue
     elif(commands[0] == "bill"):
-        pass
+        b = None
+        if(commands[1] == "new"):
+            b = bills.new()
+        elif(commands[1] == "select"):
+            b = bills[commands[2]]
+        elif(commands[1] == "delete"):
+            bills.delete(commands[2])
+        elif(commands[1] == "add"):
+            if(b == None):
+                print("Wrong bill selected")
+                continue
+            b.add_item(stock.find_item(commands[2]), commands[3])
+        elif(commands[1] == "remove"):
+            if(b == None):
+                print("Wrong bill selected")
+                continue
+            b.remove_item(commands[2])
+        else:
+            print("Wrong input!")
+            continue
     elif(commands[0] == "order"):
         pass
     elif(commands[0] == "help"):
