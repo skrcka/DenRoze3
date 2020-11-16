@@ -17,7 +17,7 @@ class IDcreator:
         self.id = maxid
 
 class DateCreator:
-    def getdate(day, month, year):
+    def getdate(self, day, month, year):
         newdate = datetime(year, month, day)
         return newdate
 
@@ -118,8 +118,8 @@ class Bill:
     def add_item(self, item, count):
         self.items.append(BillItem(item, count))
         self.total += item.price * count
-    def load_item(self, id, name, code, price, dph, count, mincount, weight, is_age_resctricted, sale_count):
-        self.items.append(BillItem(Item(id, name, code, price, dph, count, mincount, weight, is_age_resctricted), sale_count))
+    def load_item(self, id, name, code, price, dph, count, mincount, weight, is_age_restricted, sale_count):
+        self.items.append(BillItem(Item(id, name, code, price, dph, count, mincount, weight, is_age_restricted), sale_count))
         self.total += price * sale_count
     def remove_item(self, id):
         self.total -= self.items[id].item.price * self.items[id].count

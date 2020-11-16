@@ -1,71 +1,74 @@
-[{
-        "id": 1,
-        "items": [{
-                "item": {
-                    "id": 1,
-                    "name": "vejce",
-                    "code": "vesnica",
-                    "price": 10,
-                    "dph": 21,
-                    "count": 100,
-                    "mincount": 10,
-                    "weight": 50,
-                    "is_age_restricted": false
-                },
-                "count": 3
-            },
-            {
-                "item": {
-                    "id": 2,
-                    "name": "piko",
-                    "code": "dubina",
-                    "price": 200,
-                    "dph": 0,
-                    "count": 69,
-                    "mincount": 10,
-                    "weight": 1,
-                    "is_age_restricted": false
-                },
-                "count": 1
-            }
-        ],
-        "total": 230,
-        "date": "2020-11-14 20:57:34.448586",
-        "payment_method": ""
-    },
-    {
-        "id": 2,
-        "items": [{
-                "item": {
-                    "id": 1,
-                    "name": "vejce",
-                    "code": "vesnica",
-                    "price": 10,
-                    "dph": 21,
-                    "count": 100,
-                    "mincount": 10,
-                    "weight": 50,
-                    "is_age_restricted": false
-                },
-                "count": 30
-            },
-            {
-                "item": {
-                    "id": 2,
-                    "name": "piko",
-                    "code": "dubina",
-                    "price": 200,
-                    "dph": 0,
-                    "count": 69,
-                    "mincount": 10,
-                    "weight": 1,
-                    "is_age_restricted": false
-                },
-                "count": 10
-            }
-        ],
-        "total": 2300,
-        "date": "2020-11-14 20:57:34.448596",
-        "payment_method": ""
-    }
+[
+  {
+    "id": 1,
+    "items": [
+      {
+        "item": {
+          "id": 1,
+          "name": "vejce",
+          "code": "vesnica",
+          "price": 10,
+          "dph": 21,
+          "count": 100,
+          "mincount": 10,
+          "weight": 50,
+          "is_age_restricted": false
+        },
+        "count": 3
+      },
+      {
+        "item": {
+          "id": 2,
+          "name": "piko",
+          "code": "dubina",
+          "price": 200,
+          "dph": 0,
+          "count": 69,
+          "mincount": 10,
+          "weight": 1,
+          "is_age_restricted": false
+        },
+        "count": 1
+      }
+    ],
+    "total": 230,
+    "date": "2020-11-14 20:57:34.448586",
+    "payment_method": ""
+  },
+  {
+    "id": 2,
+    "items": [
+      {
+        "item": {
+          "id": 1,
+          "name": "vejce",
+          "code": "vesnica",
+          "price": 10,
+          "dph": 21,
+          "count": 100,
+          "mincount": 10,
+          "weight": 50,
+          "is_age_restricted": false
+        },
+        "count": 30
+      },
+      {
+        "item": {
+          "id": 2,
+          "name": "piko",
+          "code": "dubina",
+          "price": 200,
+          "dph": 0,
+          "count": 69,
+          "mincount": 10,
+          "weight": 1,
+          "is_age_restricted": false
+        },
+        "count": 10
+      }
+    ],
+    "total": 2300,
+    "date": "2020-11-14 20:57:34.448596",
+    "payment_method": ""
+  }
 ]

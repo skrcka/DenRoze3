@@ -89,8 +89,9 @@ class Bills:
 class Users:
     def __init__(self):
         self.users = []
-    def load(self,id,name,password, is_employee, is_admin):
-        self.users.append(User(id, name, password, is_employee, is_admin))
+        self.idcreator = IDcreator()
+    def load(self, name, real_name, password, phone, email, is_employee, is_manager):
+        self.users.append(User(self.idcreator.getid(), name, real_name, password, phone, email, is_employee, is_manager))
     def add(self, user):
         self.users.append(user)
     def remove(self, id):
@@ -106,13 +107,14 @@ class Stock:
     def __init__(self):
         self.stock = []  
         self.idcreator = IDcreator()
-    def load(self, id, name, code, price, dph, count, mincount, weight, is_age_resctricted):
-        self.stock.append(Item(id, name, code, price, dph, count, mincount, weight, is_age_resctricted))
+    def load(self, id, name, code, price, dph, count, mincount, weight, is_age_restricted):
+        self.stock.append(Item(id, name, code, price, dph, count, mincount, weight, is_age_restricted))
     def add(self, item):
         self.stock.append(item)
-    def new(self, name, code, price, dph, count, mincount, weight, is_age_resctricted):
-        self.stock.append(Item(self.idcreator.getid(), name, code, price, dph, count, mincount, weight, is_age_resctricted))
-    def remove(self, id):
+    def new(self, name, code, price, dph, count, mincount, weight, is_age_restricted):
+        self.stock.append(Item(self.idcreator.getid(), name, code, price, dph, count, mincount, weight, is_age_restricted))
+    def delete(self, search_term):
+        id = self.find_item(search_term)
         del self.stock[id]
     def __setitem__(self, number, data):
         self.stock[number] = data

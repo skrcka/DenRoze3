@@ -7,31 +7,69 @@ stock = Stock()
 bills = Bills()
 orders = Orders()
 users = Users()
-#rw.load_stock(stock)
-#rw.load_bills(bills)
-#stock.load(0, "vejce", "vesnica", 10, 21, 100, 10, 50, False)
-#stock.load(1, "piko", "dubina", 200, 0, 69, 10, 1, False)
-#rw.write_stock_local(stock)
-rw.load_stock_local(stock)
-#print(stock[0].weight)
-#b = bills.new()
-#b.add_item(stock[0],3)
-#b.add_item(stock[1],1)
-#b = bills.new()
-#b.add_item(stock[0],30)
-#b.add_item(stock[1],10)
-#rw.write_bills_local(bills)
-rw.load_bills_local(bills)
-#bills.print()
-#orders.new()
-#orders[0].add_item(stock[0], 5)
-#rw.write_orders_local(orders)
-rw.load_orders_local(orders)
-#orders.print()
-#i = stock.find_item(1)
-#print(i.name)
-#stock.print()
-rw.timeshift(DateCreator.getdate(16, 11, 2020), stock, bills, orders, users)
-stock.print()
-bills.print()
-orders.print()
+
+rw.load_all_local(stock, bills, orders, users)
+app_on = True
+while(app_on):
+    commands = []
+    user_input = input()
+    commands = user_input.split(' ')
+    pprint(commands)
+    if(commands[0] == "quit"):
+        app_on = False
+        break
+    elif(commands[0] == "stock"):
+        if(commands[1] == "new"):
+            print("name, code, price, dph, count, mincount, weight, is_age_restricted")
+            name, code, price, dph, count, mincount, weight, is_age_restricted = input().split(" ")
+            stock.new(name, code, price, dph, count, mincount, weight, is_age_restricted)
+        elif(commands[1] == "print"):
+            stock.print()
+        elif(commands[1] == "edit"):
+            i = stock.find_item(commands[2])
+            if i == None:
+                print("Wrong input!")
+                continue
+            if(commands[3] == "name"):
+                i.name = commands[4]
+            elif(commands[3] == "code"):
+                i.code = commands[4]
+            elif(commands[3] == "price"):
+                i.price = commands[4]
+            elif(commands[3] == "dph"):
+                i.dph = commands[4]
+            elif(commands[3] == "count"):
+                i.count = commands[4]
+            elif(commands[3] == "mincount"):
+                i.mincount = commands[4]
+            elif(commands[3] == "weight"):
+                i.weight = commands[4]
+            elif(commands[3] == "is_age_restricted"):
+                i.is_age_restricted = commands[4]
+        elif(commands[1] == "add"):
+            i = stock.find_item(commands[2])
+            if i == None:
+                print("Wrong input!")
+                continue
+            i.count += commands[3]
+        elif(commands[1] == "remove"):
+            i = stock.find_item(commands[2])
+            if i == None:
+                print("Wrong input!")
+                continue
+            i.count -= commands[3]
+        elif(commands[1] == "delete"):
+            stock.delete(commands[2])
+        else:
+            print("Wrong input!")
+            continue
+    elif(commands[0] == "bill"):
+        pass
+    elif(commands[0] == "order"):
+        pass
+    elif(commands[0] == "help"):
+        pass
+    else:
+        print("Wrong input!")
+        continue
+rw.write_local_and_clear(stock, bills, orders, users)
