@@ -52,8 +52,17 @@ class Orders:
         return order
     def add(self, order):
         self.orders.append(order)
-    def remove(self, id):
-        del self.orders[id]
+    def delete(self, search_term):
+        o = self.find_order(search_term)
+        if(o == None):
+            return
+        del o
+    def find_order(self, search_term):
+        for o in self.orders:
+            if(o.id == search_term):
+                return o
+        print("Order not found")
+        return None
     def __setitem__(self, number, data):
         self.orders[number] = data
     def __getitem__(self, number):
@@ -74,8 +83,17 @@ class Bills:
         return bill
     def add(self, bill):
         self.bills.append(bill)
-    def delete(self, id):
-        del self.bills[id]
+    def delete(self, search_term):
+        b = self.find_bill(search_term)
+        if(b == None):
+            return
+        del b
+    def find_bill(self, search_term):
+        for b in self.bills:
+            if(b.id == search_term):
+                return b
+        print("Bill not found")
+        return None
     def __setitem__(self, number, data):
         self.bills[number] = data
     def __getitem__(self, number):
@@ -108,14 +126,16 @@ class Stock:
         self.stock = []  
         self.idcreator = IDcreator()
     def load(self, id, name, code, price, dph, count, mincount, weight, is_age_restricted):
-        self.stock.append(Item(id, name, code, price, dph, count, mincount, weight, is_age_restricted))
+        self.stock.append(Item(int(id), name, code, float(price), int(dph), int(count), int(mincount), float(weight), bool(is_age_restricted)))
     def add(self, item):
         self.stock.append(item)
     def new(self, name, code, price, dph, count, mincount, weight, is_age_restricted):
         self.stock.append(Item(self.idcreator.getid(), name, code, price, dph, count, mincount, weight, is_age_restricted))
     def delete(self, search_term):
-        id = self.find_item(search_term)
-        del self.stock[id]
+        i = self.find_item(search_term)
+        if(i == None):
+            return
+        del i
     def __setitem__(self, number, data):
         self.stock[number] = data
     def __getitem__(self, number):

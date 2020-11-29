@@ -36,7 +36,8 @@ class Item:
         print("[{}]{}, {}, {}({}), {}, {}, {}, {}".format(self.id, self.name, self.code, self.price, self.dph, self.count, self.mincount, self.weight, self.is_age_restricted))
 
 class BillItem:
-    def __init__(self, item, count):
+    def __init__(self, id, item, count):
+        self.id = id
         self.item = item
         self.count = count
 
@@ -52,14 +53,23 @@ class Order:
         self.shipping_method = ""
         self.address = ""
         self.status = ""
+        self.idcreator = IDcreator()
     def add_item(self, item, count):
         self.total += item.price * count
         self.total_weight += item.weight * count
-        self.items.append(BillItem(item, count))
-    def remove_item(self, id):
-        self.total -= self.items[id].item.price * self.items[id].count
-        self.total_weight -= self.items[id].item.weight * self.items[id].count
-        del self.items[id]
+        self.items.append(BillItem(self.idcreator.getid(), item, count))
+    def find_item(self, search_term):
+        for i in self.items:
+            if(i.item.id == search_term or i.item.name == search_term or i.item.code == search_term):
+                return i
+        print("Item not found")
+    def change_item(self, search_term, count):
+        i = self.find_item(search_term)
+        i.count = count
+    def remove_item(self, search_term):
+        i = self.find_item(search_term)
+        self.total -= i.item.price * i.count
+        del i
     def print(self):
         print("****************************************************")
         print("Objednavka: [%d] Datum a cas: %s" % (self.id, self.date))
@@ -98,6 +108,7 @@ class Order:
                 "is_age_restricted": billitem.item.is_age_restricted,
             }
             billitem_dict = {
+                "id": billitem.id,
                 "item": item_dict,
                 "count": billitem.count
             }
@@ -113,17 +124,28 @@ class Bill:
         self.payment_method = ""
         self.eet = ""
         self.is_sale = True
+        self.idcreator = IDcreator()
     def change_type(self):
         self.is_sale = not self.is_sale
     def add_item(self, item, count):
-        self.items.append(BillItem(item, count))
-        self.total += item.price * count
-    def load_item(self, id, name, code, price, dph, count, mincount, weight, is_age_restricted, sale_count):
-        self.items.append(BillItem(Item(id, name, code, price, dph, count, mincount, weight, is_age_restricted), sale_count))
-        self.total += price * sale_count
-    def remove_item(self, id):
-        self.total -= self.items[id].item.price * self.items[id].count
-        del self.items[id]
+        self.items.append(BillItem(self.idcreator.getid(), item, int(count)))
+        self.total += item.price * int(count)
+    def load_item(self, idbi, idi, name, code, price, dph, count, mincount, weight, is_age_restricted, sale_count):
+        self.items.append(BillItem(int(idbi), Item(int(idi), name, code, float(price), int(dph), int(count), int(mincount), float(weight), bool(is_age_restricted)), sale_count))
+        self.total += float(price) * int(sale_count)
+    def change_item(self, search_term, count):
+        i = self.find_item(search_term)
+        i.count = count
+    def find_item(self, search_term):
+        for i in self.items:
+            if(i.item.id == search_term or i.item.name == search_term or i.item.code == search_term):
+                return i
+        print("Item not found")
+        return None
+    def remove_item(self, search_term):
+        i = self.find_item(search_term)
+        self.total -= i.item.price * i.count
+        del i
     def transform(self):
         bill_dict = {
             'id': self.id,
@@ -145,6 +167,7 @@ class Bill:
                 "is_age_restricted": billitem.item.is_age_restricted,
             }
             billitem_dict = {
+                "id": billitem.id,
                 "item": item_dict,
                 "count": billitem.count
             }
@@ -155,7 +178,7 @@ class Bill:
         print("Uctenka: [%d] Datum a cas: %s" % (self.id, self.date))
         print("Zbozi: [id] nazev dph mnozstvi cena cena_celkem")
         for i in self.items:
-            print('\t[%d] %s %d %d %.2f %.2f' % (i.item.id, i.item.name, i.item.dph, i.count, i.item.price, i.item.price * i.count))
+            print('\t[%d] %s %d %d %.2f %.2f' % (i.id, i.item.name, i.item.dph, i.count, i.item.price, i.item.price * i.count))
         print("Celkova cena: %.2f" % self.total)
         print("EET kod: %s" % self.eet)
         print("****************************************************")

@@ -8,13 +8,14 @@ from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator
 class Local_db:
     def __init__(self):
         self.path_to_stock_history = os.path.abspath(os.path.join('data', 'stock', 'stock-{}.json'.format(datetime.today().date())))
-        self.path_to_bills = os.path.abspath(os.path.join('data', 'bills', "bills-{}.json".format(datetime.today().date())))
+        self.path_to_bills_history = os.path.abspath(os.path.join('data', 'bills', "bills-{}.json".format(datetime.today().date())))
         self.path_to_orders_history = os.path.abspath(os.path.join('data', 'orders', "orders-{}.json".format(datetime.today().date())))
         self.path_to_changes = os.path.abspath(os.path.join('data', 'changes', 'changes-{}.json'.format(datetime.today().date())))
         self.path_to_users_history = os.path.abspath(os.path.join('data', 'users', 'users-{}.json'.format(datetime.today().date())))
         self.path_to_users = os.path.abspath(os.path.join('data', 'users.json'))
         self.path_to_stock = os.path.abspath(os.path.join('data', 'stock.json'))
         self.path_to_orders = os.path.abspath(os.path.join('data', "orders.json"))
+        self.path_to_bills = os.path.abspath(os.path.join('data', "bills.json"))
         self.timeshifted = False
 
     def timeshift(self, newdate):
@@ -61,7 +62,7 @@ class Local_db:
             o.date = datetime.strptime(order["date"], "%Y-%m-%d %H:%M:%S.%f")
             o.user = order["user"]
             for billitem in order["items"]:
-                o.add_item(Item(billitem["item"]["id"], billitem["item"]["name"], billitem["item"]["code"],billitem["item"]["price"], billitem["item"]["dph"], billitem["item"]["count"], billitem["item"]["mincount"], billitem["item"]["weight"], billitem["item"]["is_age_restricted"]), billitem["count"])
+                billitem.load_item(billitem["id"], billitem["item"]["id"], billitem["item"]["name"], billitem["item"]["code"],billitem["item"]["price"], billitem["item"]["dph"], billitem["item"]["count"], billitem["item"]["mincount"], billitem["item"]["weight"], billitem["item"]["is_age_restricted"], billitem["count"])
             o.total = order["total"]
             o.total_weight = order["total_weight"]
             o.payment_method = order["payment_method"]
@@ -70,6 +71,8 @@ class Local_db:
             o.status = order["status"]
             orders.add(o)
         orders.idcreator.setmaxid(orders)
+        for o in orders:
+            o.idcreator.setmaxid(o.items)
     def write_orders(self, orders):
         with open(self.path_to_orders, "w+") as file:
             order_list = []
@@ -86,11 +89,13 @@ class Local_db:
             b = Bill(bill["id"])
             b.date = datetime.strptime(bill["date"], "%Y-%m-%d %H:%M:%S.%f")
             for billitem in bill["items"]:
-                b.add_item(Item(billitem["item"]["id"], billitem["item"]["name"], billitem["item"]["code"],billitem["item"]["price"], billitem["item"]["dph"], billitem["item"]["count"], billitem["item"]["mincount"], billitem["item"]["weight"], billitem["item"]["is_age_restricted"]), billitem["count"])
+                b.load_item(billitem["id"], billitem["item"]["id"], billitem["item"]["name"], billitem["item"]["code"],billitem["item"]["price"], billitem["item"]["dph"], billitem["item"]["count"], billitem["item"]["mincount"], billitem["item"]["weight"], billitem["item"]["is_age_restricted"], billitem["count"])
             b.total = bill["total"]
             b.payment_method = bill["payment_method"]
             bills.add(b)
         bills.idcreator.setmaxid(bills)
+        for b in bills:
+            b.idcreator.setmaxid(b.items)
     def write_bills(self, bills):
         with open(self.path_to_bills, "w+") as file:
             bill_list = []

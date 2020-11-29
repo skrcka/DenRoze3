@@ -3,33 +3,44 @@
     "id": 1,
     "name": "vejce",
     "code": "vesnica",
-    "price": 10,
+    "price": 10.0,
     "dph": 21,
     "count": 9,
     "mincount": 10,
-    "weight": 50,
+    "weight": 50.0,
     "is_age_restricted": false
   },
   {
     "id": 2,
     "name": "piko",
     "code": "dubina",
-    "price": 200,
+    "price": 200.0,
     "dph": 0,
     "count": 69,
     "mincount": 10,
-    "weight": 1,
+    "weight": 1.0,
     "is_age_restricted": false
   },
   {
     "id": 3,
     "name": "ganja",
     "code": "weed",
-    "price": "200",
-    "dph": "0",
-    "count": "1000",
-    "mincount": "10",
-    "weight": "1",
-    "is_age_restricted": "False"
+    "price": 200.0,
+    "dph": 0,
+    "count": 1000,
+    "mincount": 10,
+    "weight": 1.0,
+    "is_age_restricted": true
+  },
+  {
+    "id": 4,
+    "name": "liquid",
+    "code": "ego10",
+    "price": 99.0,
+    "dph": 21,
+    "count": 35,
+    "mincount": 25,
+    "weight": 10.0,
+    "is_age_restricted": true
   }
 ]

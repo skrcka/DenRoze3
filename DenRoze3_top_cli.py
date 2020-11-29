@@ -10,19 +10,20 @@ users = Users()
 
 rw.load_all_local(stock, bills, orders, users)
 app_on = True
+b = None
+o = None
 while(app_on):
     commands = []
     user_input = input()
     commands = user_input.split(' ')
-    pprint(commands)
+    #pprint(commands)
+    #try:
     if(commands[0] == "quit"):
         app_on = False
         break
     elif(commands[0] == "stock"):
         if(commands[1] == "new"):
-            print("name, code, price, dph, count, mincount, weight, is_age_restricted")
-            name, code, price, dph, count, mincount, weight, is_age_restricted = input().split(" ")
-            stock.new(name, code, price, dph, count, mincount, weight, is_age_restricted)
+            stock.new(commands[2], commands[3], float(commands[4]), int(commands[5]), int(commands[6]), int(commands[7]), float(commands[8]), bool(commands[9]))
         elif(commands[1] == "print"):
             stock.print()
         elif(commands[1] == "edit"):
@@ -64,31 +65,90 @@ while(app_on):
             print("Wrong input!")
             continue
     elif(commands[0] == "bill"):
-        b = None
         if(commands[1] == "new"):
             b = bills.new()
         elif(commands[1] == "select"):
-            b = bills[commands[2]]
+            b = bills[int(commands[2]) - 1]
         elif(commands[1] == "delete"):
             bills.delete(commands[2])
         elif(commands[1] == "add"):
             if(b == None):
                 print("Wrong bill selected")
                 continue
-            b.add_item(stock.find_item(commands[2]), commands[3])
+            b.add_item(stock.find_item(commands[2]), int(commands[3]))
         elif(commands[1] == "remove"):
             if(b == None):
                 print("Wrong bill selected")
                 continue
-            b.remove_item(commands[2])
+            b.remove_item(int(commands[2]) - 1)
+        elif(commands[1] == "print"):
+            if(b == None):
+                print("Wrong bill selected")
+                continue
+            b.print()
+        elif(commands[1] == "printall"):
+            bills.print()
         else:
             print("Wrong input!")
             continue
     elif(commands[0] == "order"):
-        pass
+        if(commands[1] == "new"):
+            o = orders.new()
+        elif(commands[1] == "select"):
+            o = orders[int(commands[2]) - 1]
+        elif(commands[1] == "delete"):
+            orders.delete(int(commands[2]) - 1)
+        elif(commands[1] == "add"):
+            if(o == None):
+                print("Wrong order selected")
+                continue
+            o.add_item(stock.find_item(commands[2]), int(commands[3]))
+        elif(commands[1] == "remove"):
+            if(o == None):
+                print("Wrong order selected")
+                continue
+            o.remove_item(commands[2])
+        elif(commands[1] == "change"):
+            if(o == None):
+                print("Wrong order selected")
+                continue
+            o.change_item(int(commands[2]) - 1, int(commands[3]))
+        elif(commands[1] == "print"):
+            if(o == None):
+                print("Wrong bill selected")
+                continue
+            o.print()
+        elif(commands[1] == "printall"):
+            orders.print()
+        else:
+            print("Wrong input!")
+            continue
     elif(commands[0] == "help"):
-        pass
+        print("Use with: [Stock/Bill/Order]")
+        print("Stock help: ")
+        print("\t new - Creates new item and adds it to stock")
+        print("\t print - Prints stock")
+        print("\t edit [item] [attribute] [newvalue] - Edits item in stock")
+        print("\t add [item] [count] - Adds count to item in stock")
+        print("\t remove [item] [count] - Removes count from item in stock")
+        print("\t delete [item] - Removes item from stock")
+        print("Bill help: ")
+        print("\t new - Creates new bill and selects it")
+        print("\t select - Selects bill")
+        print("\t delete [id] - Deletes bill")
+        print("\t remove [item] - Removes item from selected bill")
+        print("\t print - Prints selected bill")
+        print("\t printall - Prints all bills")
+        print("Order help: ")
+        print("\t new - Creates new order and selects it")
+        print("\t select - Selects order")
+        print("\t delete [id] - Deletes order")
+        print("\t remove [item] - Removes item from selected order")
+        print("\t print - Prints selected order")
+        print("\t printall - Prints all orders")
     else:
         print("Wrong input!")
         continue
+    #except:
+    #   print("Wrong input!") 
 rw.write_local_and_clear(stock, bills, orders, users)

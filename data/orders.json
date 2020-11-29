@@ -4,23 +4,67 @@
     "user": null,
     "items": [
       {
+        "id": 1,
         "item": {
-          "id": 1,
-          "name": "vejce",
-          "code": "vesnica",
-          "price": 10,
-          "dph": 21,
-          "count": 100,
+          "id": 2,
+          "name": "piko",
+          "code": "dubina",
+          "price": 200.0,
+          "dph": 0,
+          "count": 69,
           "mincount": 10,
-          "weight": 50,
+          "weight": 1.0,
           "is_age_restricted": false
         },
-        "count": 5
+        "count": 4
       }
     ],
-    "total": 50,
-    "total_weight": 250,
-    "date": "2020-11-15 08:01:03.810008",
+    "total": 800.0,
+    "total_weight": 4.0,
+    "date": "2020-11-30 00:12:42.494149",
+    "payment_method": "",
+    "shipping_method": "",
+    "address": "",
+    "status": ""
+  },
+  {
+    "id": 2,
+    "user": null,
+    "items": [
+      {
+        "id": 1,
+        "item": {
+          "id": 3,
+          "name": "ganja",
+          "code": "weed",
+          "price": 200.0,
+          "dph": 0,
+          "count": 1000,
+          "mincount": 10,
+          "weight": 1.0,
+          "is_age_restricted": true
+        },
+        "count": 4
+      },
+      {
+        "id": 2,
+        "item": {
+          "id": 4,
+          "name": "liquid",
+          "code": "ego10",
+          "price": 99.0,
+          "dph": 21,
+          "count": 35,
+          "mincount": 25,
+          "weight": 10.0,
+          "is_age_restricted": true
+        },
+        "count": 3
+      }
+    ],
+    "total": 1097.0,
+    "total_weight": 34.0,
+    "date": "2020-11-30 00:13:11.019534",
     "payment_method": "",
     "shipping_method": "",
     "address": "",
