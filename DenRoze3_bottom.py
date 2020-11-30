@@ -7,18 +7,24 @@ from sqlite3 import Error
 #import pyodbc
 #from xml.etree import ElementTree
 
-class sqlite:
+class Sqlite_db:
     def __init__(self):
         self.path_to_sqlite = os.path.abspath(os.path.join('data', 'database.sqlite'))
+        self.conn = None
     def create_connection(self):
-        conn = None
         try:
-            conn = sqlite3.connect(self.path_to_sqlite)
+            self.conn = sqlite3.connect(self.path_to_sqlite)
         except Error as e:
             print(e)
-        finally:
-            if conn:
-                conn.close()
+    def close_connection(self):
+        self.conn.close()
+        self.conn = None
+    def create_table(self, create_table_sql):
+        try:
+            c = self.conn.cursor()
+            c.execute(create_table_sql)
+        except Error as e:
+            print(e)
 
 class Local_db:
     def __init__(self):

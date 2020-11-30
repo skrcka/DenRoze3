@@ -1,12 +1,19 @@
 from datetime import datetime
 from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator
-from DenRoze3_bottom import Local_db
+from DenRoze3_bottom import Local_db, Sqlite_db
 from pprint import pprint as pprint
 
 
 class Reader_Writer:
     def __init__(self):
         self.local_db = Local_db()
+        self.sqlite_db = Sqlite_db()
+
+    # sqlite
+    def sqlite_create_database(self):
+        self.sqlite_db.create_connection()
+
+    # json
     def load_orders_local(self, orders):
         self.local_db.load_orders(orders)
     def write_orders_local(self, orders):
