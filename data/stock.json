@@ -7,30 +7,30 @@
     "dph": 21,
     "count": 9,
     "mincount": 10,
-    "weight": 50.0,
+    "weight": 0.5,
     "is_age_restricted": false
   },
   {
     "id": 2,
-    "name": "piko",
+    "name": "pikao",
     "code": "dubina",
-    "price": 200.0,
-    "dph": 0,
+    "price": 60.0,
+    "dph": 21,
     "count": 69,
     "mincount": 10,
-    "weight": 1.0,
+    "weight": 0.5,
     "is_age_restricted": false
   },
   {
     "id": 3,
-    "name": "ganja",
-    "code": "weed",
-    "price": 200.0,
-    "dph": 0,
+    "name": "mleko",
+    "code": "cow",
+    "price": 30.0,
+    "dph": 21,
     "count": 1000,
     "mincount": 10,
     "weight": 1.0,
-    "is_age_restricted": true
+    "is_age_restricted": false
   },
   {
     "id": 4,

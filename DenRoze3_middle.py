@@ -37,6 +37,14 @@ class Reader_Writer:
         self.local_db.load_bills(bills)
         self.local_db.load_orders(orders)
         self.local_db.load_users(users)
+        for bill in bills:
+            for item in bill.items:
+                item.item = stock.find_item(item.item.id)
+            bill.count_totals()
+        for order in orders:
+            for item in order.items:
+                item = stock.find_item(item.id)
+            order.count_totals()
     def timeshift(self, newdate, stock, bills, orders, users):
         self.write_local_and_clear(stock, bills, orders, users)
         self.local_db.timeshift(newdate)
@@ -108,10 +116,18 @@ class Users:
     def __init__(self):
         self.users = []
         self.idcreator = IDcreator()
-    def load(self, name, real_name, password, phone, email, is_employee, is_manager):
+    def new(self, name, real_name, password, phone, email, is_employee, is_manager):
         self.users.append(User(self.idcreator.getid(), name, real_name, password, phone, email, is_employee, is_manager))
+    def load(self, id, name, real_name, password, phone, email, is_employee, is_manager):
+        self.users.append(User(int(id), name, real_name, password, phone, email, bool(is_employee), bool(is_manager)))
     def add(self, user):
         self.users.append(user)
+    def auth(self, username, password):
+        for user in self.users:
+            if(username == user.name):
+                if(password == user.password):
+                    return user
+        return None
     def remove(self, id):
         del self.users[id]
     def __setitem__(self, number, data):

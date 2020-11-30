@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "skrcka",
+    "real_name": "Adam K",
+    "password": "1337",
+    "phone": "420420420",
+    "email": "email@email.com",
+    "is_employee": true,
+    "is_manager": false
+  }
+]

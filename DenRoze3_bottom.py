@@ -2,8 +2,23 @@ import json
 import os
 from datetime import datetime
 from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator
+import sqlite3
+from sqlite3 import Error
 #import pyodbc
 #from xml.etree import ElementTree
+
+class sqlite:
+    def __init__(self):
+        self.path_to_sqlite = os.path.abspath(os.path.join('data', 'database.sqlite'))
+    def create_connection(self):
+        conn = None
+        try:
+            conn = sqlite3.connect(self.path_to_sqlite)
+        except Error as e:
+            print(e)
+        finally:
+            if conn:
+                conn.close()
 
 class Local_db:
     def __init__(self):
@@ -44,7 +59,7 @@ class Local_db:
         with open(self.path_to_users, "r") as file:
             data = json.load(file)
         for user in data:
-            users.load(user["id"], user["name"], user["password"], user["is_employee"], user["is_admin"])
+            users.load(user["id"], user["name"], user["real_name"], user["password"], user["phone"], user["email"], user["is_employee"], user["is_manager"])
     def write_users(self, users):
         with open(self.path_to_users, "w+") as file:
             usrs = []
@@ -62,7 +77,7 @@ class Local_db:
             o.date = datetime.strptime(order["date"], "%Y-%m-%d %H:%M:%S.%f")
             o.user = order["user"]
             for billitem in order["items"]:
-                billitem.load_item(billitem["id"], billitem["item"]["id"], billitem["item"]["name"], billitem["item"]["code"],billitem["item"]["price"], billitem["item"]["dph"], billitem["item"]["count"], billitem["item"]["mincount"], billitem["item"]["weight"], billitem["item"]["is_age_restricted"], billitem["count"])
+                o.load_item(billitem["id"], billitem["item"]["id"], billitem["item"]["name"], billitem["item"]["code"],billitem["item"]["price"], billitem["item"]["dph"], billitem["item"]["count"], billitem["item"]["mincount"], billitem["item"]["weight"], billitem["item"]["is_age_restricted"], billitem["count"])
             o.total = order["total"]
             o.total_weight = order["total_weight"]
             o.payment_method = order["payment_method"]

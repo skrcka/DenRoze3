@@ -6,14 +6,14 @@
         "id": 1,
         "item": {
           "id": 3,
-          "name": "ganja",
-          "code": "weed",
-          "price": 200.0,
-          "dph": 0,
+          "name": "mleko",
+          "code": "cow",
+          "price": 30.0,
+          "dph": 21,
           "count": 1000,
           "mincount": 10,
           "weight": 1.0,
-          "is_age_restricted": true
+          "is_age_restricted": false
         },
         "count": 4
       },
@@ -21,13 +21,13 @@
         "id": 2,
         "item": {
           "id": 2,
-          "name": "piko",
+          "name": "pikao",
           "code": "dubina",
-          "price": 200.0,
-          "dph": 0,
+          "price": 60.0,
+          "dph": 21,
           "count": 69,
           "mincount": 10,
-          "weight": 1.0,
+          "weight": 0.5,
           "is_age_restricted": false
         },
         "count": 3
@@ -48,7 +48,7 @@
         "count": 1
       }
     ],
-    "total": 1499.0,
+    "total": 399.0,
     "date": "2020-11-29 23:57:31.408355",
     "payment_method": ""
   },
@@ -74,19 +74,19 @@
         "id": 2,
         "item": {
           "id": 2,
-          "name": "piko",
+          "name": "pikao",
           "code": "dubina",
-          "price": 200.0,
-          "dph": 0,
+          "price": 60.0,
+          "dph": 21,
           "count": 69,
           "mincount": 10,
-          "weight": 1.0,
+          "weight": 0.5,
           "is_age_restricted": false
         },
         "count": 2
       }
     ],
-    "total": 697.0,
+    "total": 417.0,
     "date": "2020-11-29 23:57:54.145790",
     "payment_method": ""
   }

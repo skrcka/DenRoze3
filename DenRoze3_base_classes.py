@@ -54,6 +54,16 @@ class Order:
         self.address = ""
         self.status = ""
         self.idcreator = IDcreator()
+    def count_totals(self):
+        self.total = 0
+        self.total_weight = 0
+        for item in self.items:
+            self.total += float(item.item.price) * int(item.count)
+            self.total_weight += float(item.item.weight) * int(item.count)
+    def load_item(self, idbi, idi, name, code, price, dph, count, mincount, weight, is_age_restricted, sale_count):
+        self.items.append(BillItem(int(idbi), Item(int(idi), name, code, float(price), int(dph), int(count), int(mincount), float(weight), bool(is_age_restricted)), sale_count))
+        self.total += float(price) * int(sale_count)
+        self.total_weight += float(weight) * int(sale_count)
     def add_item(self, item, count):
         self.total += item.price * count
         self.total_weight += item.weight * count
@@ -69,6 +79,7 @@ class Order:
     def remove_item(self, search_term):
         i = self.find_item(search_term)
         self.total -= i.item.price * i.count
+        self.total_weight -= i.item.weight * i.count
         del i
     def print(self):
         print("****************************************************")
@@ -127,6 +138,10 @@ class Bill:
         self.idcreator = IDcreator()
     def change_type(self):
         self.is_sale = not self.is_sale
+    def count_totals(self):
+        self.total = 0
+        for item in self.items:
+            self.total += float(item.item.price) * int(item.count)
     def add_item(self, item, count):
         self.items.append(BillItem(self.idcreator.getid(), item, int(count)))
         self.total += item.price * int(count)
