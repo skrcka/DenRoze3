@@ -18,6 +18,7 @@ class Sqlite_db:
     def close_connection(self):
         self.conn.close()
         self.conn = None
+
     def create_table(self, create_table_sql):
         try:
             c = self.conn.cursor()
@@ -30,8 +31,15 @@ class Sqlite_db:
         cur = self.conn.cursor()
         cur.execute(sql, (str(item.name), str(item.code), str(item.price), str(item.dph), str(item.count), str(item.mincount), str(item.weight), str(item.is_age_restricted)))
         self.conn.commit()
-
+    
         return cur.lastrowid
+
+    def update_item(self, item):
+        sql = 'UPDATE Stock SET name = ?, code = ?, price = ?, dph = ?, count = ?, mincount = ?, weight = ?, is_age_restricted = ? WHERE id = ?'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(item.name), str(item.code), str(item.price), str(item.dph), str(item.count), str(item.mincount), str(item.weight), str(item.is_age_restricted), str(item.id)))
+        conn.commit()
+
     def insert_bill(self, bill):
         sql = 'INSERT INTO Bills(total,date,payment_method,eet,is_sale) VALUES(?,?,?,?,?)'
         cur = self.conn.cursor()
@@ -40,6 +48,12 @@ class Sqlite_db:
         bill_id = cur.lastrowid
 
         return bill_id
+
+    def update_bill(self, bill):
+        sql = 'UPDATE Bills SET total = ?, date = ?, payment_method = ?, eet = ?, is_sale = ? WHERE id = ?'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(bill.total), str(bill.date), str(bill.payment_method), str(bill.eet), str(bill.is_sale), str(bill.id)))
+        self.conn.commit()
 
     def insert_order(self, order, uid):
         sql = 'INSERT INTO Orders(user_id,total,total_weight,date,payment_method,shipping_method,address,status) VALUES(?,?,?,?,?,?,?,?)'
@@ -71,7 +85,7 @@ class Sqlite_db:
     def insert_user(self, user):
         sql = 'INSERT INTO Users(name,real_name,password,phone,email,is_employee,is_manager) VALUES(?,?,?,?,?,?,?)'
         cur = self.conn.cursor()
-        cur.execute(sql, (str(user.name), str(user.real_name), str(user.password), str(user.phone), str(user.email), str(user.is_empoyee), str(user.is_manager)))
+        cur.execute(sql, (str(user.name), str(user.real_name), str(user.password), str(user.phone), str(user.email), str(user.is_employee), str(user.is_manager)))
         self.conn.commit()
         billitem_id = cur.lastrowid
 

@@ -1,9 +1,7 @@
 from pprint import pprint
-from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, DB_Reader_Writer
+from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, DB_Reader_Writer, json_mode
 from DenRoze3_base_classes import Item, BillItem, Bill, DateCreator
 
-global json_mode
-json_mode = False
 
 rw = rw = Reader_Writer() #DB_Reader_Writer
 if json_mode:

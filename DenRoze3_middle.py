@@ -1,8 +1,8 @@
 from datetime import datetime
-from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator
+from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator, json_mode
 from DenRoze3_bottom import Local_db, Sqlite_db
 from pprint import pprint as pprint
-from DenRoze3_top_cli import json_mode
+
 
 class DB_Reader_Writer:
     def __init__(self):

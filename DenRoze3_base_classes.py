@@ -1,8 +1,9 @@
 import os
 from datetime import datetime
 from pprint import pprint
-from DenRoze3_top_cli import json_mode
 
+global json_mode
+json_mode = False
 
 class IDcreator:
     def __init__(self):

@@ -1,7 +1,6 @@
 from pprint import pprint
 from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, DB_Reader_Writer
 from DenRoze3_base_classes import Item, BillItem, Bill, DateCreator
-from DenRoze3_top_cli import json_mode
 
 rw = Reader_Writer()
 sql = DB_Reader_Writer()
@@ -39,4 +38,4 @@ users = Users()
 #orders.print()
 rw.load_all(stock, bills, orders, users)
 #sql.create_database()
-sql.insert_bills(bills)
+sql.write_all_and_clear(stock, bills, orders, users)
