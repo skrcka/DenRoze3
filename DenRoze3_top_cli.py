@@ -1,14 +1,20 @@
 from pprint import pprint
-from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders
+from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, DB_Reader_Writer
 from DenRoze3_base_classes import Item, BillItem, Bill, DateCreator
 
-rw = Reader_Writer()
+global json_mode
+json_mode = False
+
+rw = rw = Reader_Writer() #DB_Reader_Writer
+if json_mode:
+    rw = Reader_Writer()
+    
 stock = Stock()
 bills = Bills()
 orders = Orders()
 users = Users()
 
-rw.load_all_local(stock, bills, orders, users)
+rw.load_all(stock, bills, orders, users)
 app_on = True
 b = None
 o = None
@@ -164,4 +170,4 @@ while(app_on):
             continue
     except Exception as e:
        print("e") 
-rw.write_local_and_clear(stock, bills, orders, users)
+rw.write_all_and_clear(stock, bills, orders, users)

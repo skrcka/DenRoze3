@@ -4,8 +4,7 @@ from datetime import datetime
 from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, IDcreator
 import sqlite3
 from sqlite3 import Error
-#import pyodbc
-#from xml.etree import ElementTree
+
 
 class Sqlite_db:
     def __init__(self):
@@ -26,13 +25,65 @@ class Sqlite_db:
         except Error as e:
             print(e)
 
+    def insert_item(self, item):
+        sql = 'INSERT INTO Stock(name,code,price,dph,count,mincount,weight,is_age_restricted) VALUES(?,?,?,?,?,?,?,?)'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(item.name), str(item.code), str(item.price), str(item.dph), str(item.count), str(item.mincount), str(item.weight), str(item.is_age_restricted)))
+        self.conn.commit()
+
+        return cur.lastrowid
+    def insert_bill(self, bill):
+        sql = 'INSERT INTO Bills(total,date,payment_method,eet,is_sale) VALUES(?,?,?,?,?)'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(bill.total), str(bill.date), str(bill.payment_method), str(bill.eet), str(bill.is_sale)))
+        self.conn.commit()
+        bill_id = cur.lastrowid
+
+        return bill_id
+
+    def insert_order(self, order, uid):
+        sql = 'INSERT INTO Orders(user_id,total,total_weight,date,payment_method,shipping_method,address,status) VALUES(?,?,?,?,?,?,?,?)'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(uid), str(order.total), str(order.total_weight), str(order.date), str(order.payment_method),str(order.shipping_method),str(order.address),str(order.status)))
+        self.conn.commit()
+        order_id = cur.lastrowid
+
+        return order_id
+    
+    def insert_orderitem(self, billitem, id):
+        sql = 'INSERT INTO BillItems(count,item_id,order_id) VALUES(?,?,?)'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(billitem.count), str(billitem.item.id), str(id)))
+        self.conn.commit()
+        orderitem_id = cur.lastrowid
+
+        return orderitem_id
+
+    def insert_billitem(self, billitem, id):
+        sql = 'INSERT INTO BillItems(count,item_id,bill_id) VALUES(?,?,?)'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(billitem.count), str(billitem.item.id), str(id)))
+        self.conn.commit()
+        billitem_id = cur.lastrowid
+
+        return billitem_id
+
+    def insert_user(self, user):
+        sql = 'INSERT INTO Users(name,real_name,password,phone,email,is_employee,is_manager) VALUES(?,?,?,?,?,?,?)'
+        cur = self.conn.cursor()
+        cur.execute(sql, (str(user.name), str(user.real_name), str(user.password), str(user.phone), str(user.email), str(user.is_empoyee), str(user.is_manager)))
+        self.conn.commit()
+        billitem_id = cur.lastrowid
+
+        return billitem_id
+
 class Local_db:
     def __init__(self):
         self.path_to_stock_history = os.path.abspath(os.path.join('data', 'stock', 'stock-{}.json'.format(datetime.today().date())))
         self.path_to_bills_history = os.path.abspath(os.path.join('data', 'bills', "bills-{}.json".format(datetime.today().date())))
         self.path_to_orders_history = os.path.abspath(os.path.join('data', 'orders', "orders-{}.json".format(datetime.today().date())))
-        self.path_to_changes = os.path.abspath(os.path.join('data', 'changes', 'changes-{}.json'.format(datetime.today().date())))
         self.path_to_users_history = os.path.abspath(os.path.join('data', 'users', 'users-{}.json'.format(datetime.today().date())))
+        self.path_to_changes = os.path.abspath(os.path.join('data', 'changes', 'changes-{}.json'.format(datetime.today().date())))
         self.path_to_users = os.path.abspath(os.path.join('data', 'users.json'))
         self.path_to_stock = os.path.abspath(os.path.join('data', 'stock.json'))
         self.path_to_orders = os.path.abspath(os.path.join('data', "orders.json"))
@@ -40,8 +91,6 @@ class Local_db:
         self.timeshifted = False
 
     def timeshift(self, newdate):
-        self.path_to_bills = os.path.abspath(os.path.join('data', 'bills', "bills-{}.json".format(newdate.date())))
-        self.path_to_orders = os.path.abspath(os.path.join('data', 'orders', "orders-{}.json".format(newdate.date())))
         self.timeshifted = True
 
     def load_stock(self, stock):
@@ -123,16 +172,3 @@ class Local_db:
             for bill in bills:
                 bill_list.append(bill.transform())
             json.dump(bill_list,file, indent=2, default=str)
-
-#class Database:
-#    def __init__(self):
-#        server = 'dbsys.cs.vsb.cz\STUDENT' 
-#        database = 'krc0071' 
-#        username = 'krc0071' 
-#        password = 'ZBH4QBnO33' 
-#        conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-#    def get_stock(stock):
-#        cursor.execute('select * stock')
-#        for row in cursor.fetchall():
-#            id,name,code,price,count = row
-#            stock.load(id,name,code,price,count)

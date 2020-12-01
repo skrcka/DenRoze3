@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from pprint import pprint
+from DenRoze3_top_cli import json_mode
 
 
 class IDcreator:
@@ -8,6 +9,8 @@ class IDcreator:
         self.id = 0
     def getid(self):
         self.id += 1
+        if(json_mode == False):
+            return 0
         return self.id
     def setmaxid(self, var):
         maxid = 0

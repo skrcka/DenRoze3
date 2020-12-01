@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "name": "vejce",
     "code": "vesnica",
     "price": 10.0,
@@ -11,7 +11,7 @@
     "is_age_restricted": false
   },
   {
-    "id": 2,
+    "id": 0,
     "name": "pikao",
     "code": "dubina",
     "price": 60.0,
@@ -22,7 +22,7 @@
     "is_age_restricted": false
   },
   {
-    "id": 3,
+    "id": 0,
     "name": "mleko",
     "code": "cow",
     "price": 30.0,
@@ -33,7 +33,7 @@
     "is_age_restricted": false
   },
   {
-    "id": 4,
+    "id": 0,
     "name": "liquid",
     "code": "ego10",
     "price": 99.0,
