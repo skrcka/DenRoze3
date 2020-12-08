@@ -300,6 +300,7 @@ class Stock:
     def new(self, name, code, price, dph, count, mincount, weight, is_age_restricted):
         item = Item(0, name, code, price, dph, count, mincount, weight, is_age_restricted)
         self.stock.append(item)
+        Reader_Writer.write_item(item)
         return item
     def delete(self, search_term):
         i = self.find_item(search_term)

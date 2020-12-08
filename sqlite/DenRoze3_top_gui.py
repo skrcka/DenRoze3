@@ -46,8 +46,19 @@ class Ui(QtWidgets.QMainWindow):
         self.stock_widget.stock_item_save_button.clicked.connect(self.stock_edit)
         # Show GUI
         self.show()
+    def stock_edit(self):
+        self.i.name = self.stock_widget.stock_item_name_edit.text()
+        self.i.code = self.stock_widget.stock_item_code_edit.text()
+        self.i.price = float(self.stock_widget.stock_item_price_edit.text())
+        self.i.dph = int(self.stock_widget.stock_item_dph_edit.text())
+        self.i.count = int(self.stock_widget.stock_item_count_edit.text())
+        self.i.mincount = int(self.stock_widget.stock_item_mincount_edit.text())
+        self.i.weight = float(self.stock_widget.stock_item_weight_edit.text())
+        self.i.is_age_restricted = bool(self.stock_widget.stock_item_is_age_restricted_edit.text())
+        self.get_stock_list()
+        Reader_Writer.write_item(self.i)
     def stock_new(self):
-        self.stock.new("", "", 0, 0, 0, 0, 0, False)
+        self.stock.new("NEW ITEM", "", 0, 0, 0, 0, 0, False)
         self.get_stock_list()
     def closeEvent(self, event):
         Reader_Writer.write_all_and_clear(self.stock, self.bills, self.orders, self.users)
