@@ -177,6 +177,7 @@ class Orders:
     def new(self, user):
         order = Order(0, user)
         self.orders.append(order)
+        Reader_Writer.write_order(order)
         return order
     def add(self, order):
         self.orders.append(order)
@@ -221,6 +222,7 @@ class Bills:
     def new(self):
         bill = Bill(0)
         self.bills.append(bill)
+        Reader_Writer.write_bill(bill)
         return bill
     def add(self, bill):
         self.bills.append(bill)

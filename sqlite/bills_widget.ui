@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>bills_label</class>
+ <widget class="QWidget" name="bills_label">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,55 +13,113 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QListView" name="bills_list">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>30</y>
-     <width>481</width>
-     <height>551</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="bills_label">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>64</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Prodej</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="bill_add_button">
-   <property name="geometry">
-    <rect>
-     <x>500</x>
-     <y>30</y>
-     <width>131</width>
-     <height>130</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>+</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="bill_delete_button">
-   <property name="geometry">
-    <rect>
-     <x>500</x>
-     <y>170</y>
-     <width>131</width>
-     <height>130</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>x</string>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="bills_add_button">
+       <property name="text">
+        <string>+</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bills_delete_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>x</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Uctenky</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="bills_list"/>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Sklad</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="stock_list">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="bill_item_count">
+         <property name="text">
+          <string>1</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bill_add_item_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>+</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bill_remove_item_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>x</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="bill_items_list"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="bill_print_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Tisk</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

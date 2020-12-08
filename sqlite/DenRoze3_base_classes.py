@@ -74,13 +74,19 @@ class Order:
             self.total_weight -= i.item.weight * i.count
             del self.items[index]
             return id
+    def remove_item_by_position(self, pos):
+        i = self.items[pos]
+        id = i.id
+        self.total -= i.item.price * i.count
+        del self.items[pos]
+        return id
     def print(self):
         print("****************************************************")
         print("Objednavka: [%d] Datum a cas: %s" % (self.id, self.date))
         print("Status %s" % self.status)
         print("Zbozi: [id] nazev dph mnozstvi cena cena_celkem")
         for i in self.items:
-            print('\t[%d] %s %d %d %.2f %.2f' % (i.item.id, i.item.name, i.item.dph, i.count, i.item.price, i.item.price * i.count))
+            print('\t[%d] %s %d %d %.2f %.2f' % (i.id, i.item.name, i.item.dph, i.count, i.item.price, i.item.price * i.count))
         print("Celkova cena: %.2f" % self.total)
         print("Celkova vaha: %.2f" % self.total_weight)
         print("Shipping method: %s" % self.shipping_method)
@@ -147,6 +153,8 @@ class Bill:
         i.count = count
     def find_item(self, search_term):
         for i in self.items:
+            if(i.id == search_term):
+                return i
             if(i.item.id == search_term or i.item.name == search_term or i.item.code == search_term):
                 return i
         print("Item not found")
@@ -159,6 +167,12 @@ class Bill:
             self.total -= i.item.price * i.count
             del self.items[index]
             return id
+    def remove_item_by_position(self, pos):
+        i = self.items[pos]
+        id = i.id
+        self.total -= i.item.price * i.count
+        del self.items[pos]
+        return id
     def transform(self):
         bill_dict = {
             'id': self.id,
