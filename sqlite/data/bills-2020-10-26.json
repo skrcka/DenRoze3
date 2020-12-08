@@ -1,0 +1,37 @@
+[
+  {
+    "id": 0,
+    "items": [
+      {
+        "item": {
+          "id": 0,
+          "name": "vejce",
+          "code": "vesnica",
+          "price": 10,
+          "dph": 21,
+          "count": 100,
+          "mincount": 10,
+          "weight": 50,
+          "is_age_restricted": false
+        },
+        "count": 5
+      },
+      {
+        "item": {
+          "id": 1,
+          "name": "piko",
+          "code": "dubina",
+          "price": 200,
+          "dph": 0,
+          "count": 69,
+          "mincount": 10,
+          "weight": 1,
+          "is_age_restricted": false
+        },
+        "count": 3
+      }
+    ],
+    "total": 650,
+    "date": "2020-10-25 22:50:08.054482"
+  }
+]

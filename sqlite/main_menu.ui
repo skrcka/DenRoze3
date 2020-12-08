@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>menu_widget</class>
+ <widget class="QWidget" name="menu_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>171</width>
+    <height>136</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="main_menu_label">
+     <property name="text">
+      <string>Main menu</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="stock_button">
+     <property name="text">
+      <string>Sklad</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="bills_button">
+     <property name="text">
+      <string>Prodej</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="orders_button">
+     <property name="text">
+      <string>Objednavky</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
