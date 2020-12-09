@@ -144,7 +144,7 @@ class Ui(QtWidgets.QMainWindow):
         self.i.count = int(self.stock_widget.stock_item_count_edit.text())
         self.i.mincount = int(self.stock_widget.stock_item_mincount_edit.text())
         self.i.weight = float(self.stock_widget.stock_item_weight_edit.text())
-        self.i.is_age_restricted = bool(self.stock_widget.stock_item_is_age_restricted_edit.text())
+        self.i.is_age_restricted = self.stock_widget.stock_item_is_age_restricted_edit.text()
         self.get_stock_list()
         Reader_Writer.write_item(self.i)
     def stock_new(self):

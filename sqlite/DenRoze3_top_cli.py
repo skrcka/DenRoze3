@@ -175,5 +175,7 @@ while(app_on):
         Reader_Writer.write_bill(b)
     if o is not None:
         Reader_Writer.write_order(o)
+print(stock[0].is_age_restricted)
+print(type(stock[0].is_age_restricted))
 Reader_Writer.write_all_and_clear(stock, bills, orders, users)
 Reader_Writer.close_connection()

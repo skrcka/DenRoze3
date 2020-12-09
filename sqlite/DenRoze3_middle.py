@@ -75,7 +75,7 @@ class Reader_Writer:
             else:
                 Reader_Writer.sqlite_db.update_order(order, order.user.id)
             for billitem in order.items:
-                Reader_Writer.sqlite_db.update_orderitem(billitem, order.id)
+                Reader_Writer.write_orderitem(billitem, order.id)
     def write_orders(orders):
         for order in orders:
             Reader_Writer.write_order(order)

@@ -30,7 +30,10 @@ class Sqlite_db:
         self.create_connection()
         sql = 'INSERT INTO Stock(name,code,price,dph,count,mincount,weight,is_age_restricted) VALUES(?,?,?,?,?,?,?,?)'
         cur = self.conn.cursor()
-        cur.execute(sql, (str(item.name), str(item.code), str(item.price), str(item.dph), str(item.count), str(item.mincount), str(item.weight), str(item.is_age_restricted)))
+        is_age_restricted = 0
+        if item.is_age_restricted == True:
+            is_age_restricted = 1
+        cur.execute(sql, (str(item.name), str(item.code), str(item.price), str(item.dph), str(item.count), str(item.mincount), str(item.weight), str(is_age_restricted)))
         self.conn.commit()
     
         return cur.lastrowid
@@ -39,7 +42,10 @@ class Sqlite_db:
     def update_item(self, item):
         sql = 'UPDATE Stock SET name = ?, code = ?, price = ?, dph = ?, count = ?, mincount = ?, weight = ?, is_age_restricted = ? WHERE id = ?'
         cur = self.conn.cursor()
-        cur.execute(sql, (str(item.name), str(item.code), str(item.price), str(item.dph), str(item.count), str(item.mincount), str(item.weight), str(item.is_age_restricted), str(item.id)))
+        is_age_restricted = 0
+        if item.is_age_restricted == True:
+            is_age_restricted = 1
+        cur.execute(sql, (str(item.name), str(item.code), str(item.price), str(item.dph), str(item.count), str(item.mincount), str(item.weight), str(is_age_restricted), str(item.id)))
         self.conn.commit()
 
     def delete_item(self, id):
@@ -70,7 +76,9 @@ class Sqlite_db:
         item.count = int(row[5])
         item.mincount = int(row[6])
         item.weight = float(row[7])
-        item.is_age_restricted = bool(row[8])
+        item.is_age_restricted = False
+        if row[8] == '1':
+            item.is_age_restricted = True
 
     def insert_bill(self, bill):
         sql = 'INSERT INTO Bills(total,date,payment_method,eet,is_sale) VALUES(?,?,?,?,?)'
