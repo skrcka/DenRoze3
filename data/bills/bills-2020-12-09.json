@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "items": [
+      {
+        "id": 1,
+        "item": {
+          "id": 2,
+          "name": "mys",
+          "code": "mouse",
+          "price": 149.0,
+          "dph": 21,
+          "count": 15,
+          "mincount": 7,
+          "weight": 0.2,
+          "is_age_restricted": true
+        },
+        "count": 4
+      }
+    ],
+    "total": 596.0,
+    "date": "2020-12-09 15:48:26.315984",
+    "payment_method": ""
+  }
+]

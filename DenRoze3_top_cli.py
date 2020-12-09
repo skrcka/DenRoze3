@@ -1,22 +1,24 @@
 from pprint import pprint
-from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, DB_Reader_Writer, json_mode
+from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, sqlite_mode, Reader_Writer_json
 from DenRoze3_base_classes import Item, BillItem, Bill, DateCreator
-
-
-rw = rw = Reader_Writer() #DB_Reader_Writer
-if json_mode:
-    rw = Reader_Writer()
     
 stock = Stock()
 bills = Bills()
 orders = Orders()
 users = Users()
 
-rw.load_all(stock, bills, orders, users)
+if sqlite_mode:
+    Reader_Writer.init()
+    Reader_Writer.load_all(stock, bills, orders, users)
+else:
+    Reader_Writer_json.init()
+    Reader_Writer_json.load_all(stock, bills, orders, users)
+
 app_on = True
 b = None
 o = None
 u = None
+i = None
 
 while(app_on):
     commands = []
@@ -40,7 +42,7 @@ while(app_on):
             u = None
         elif(commands[0] == "stock"):
             if(commands[1] == "new"):
-                stock.new(commands[2], commands[3], float(commands[4]), int(commands[5]), int(commands[6]), int(commands[7]), float(commands[8]), bool(commands[9]))
+                i = stock.new(commands[2], commands[3], float(commands[4]), int(commands[5]), int(commands[6]), int(commands[7]), float(commands[8]), bool(commands[9]))
             elif(commands[1] == "print"):
                 stock.print()
             elif(commands[1] == "edit"):
@@ -85,7 +87,7 @@ while(app_on):
             if(commands[1] == "new"):
                 b = bills.new()
             elif(commands[1] == "select"):
-                b = bills[int(commands[2]) - 1]
+                b = bills.find_bill(commands[2])
             elif(commands[1] == "delete"):
                 bills.delete(commands[2])
             elif(commands[1] == "add"):
@@ -97,7 +99,9 @@ while(app_on):
                 if(b == None):
                     print("Wrong bill selected")
                     continue
-                b.remove_item(int(commands[2]) - 1)
+                biID = b.remove_item(commands[2])
+                if sqlite_mode:
+                    Reader_Writer.delete_billitem_by_id(biID)
             elif(commands[1] == "print"):
                 if(b == None):
                     print("Wrong bill selected")
@@ -108,11 +112,18 @@ while(app_on):
             else:
                 print("Wrong input!")
                 continue
+        elif(commands[0] == "write"):
+            if sqlite_mode:
+                Reader_Writer.write_changes(stock, bills, orders)
+            else:
+                Reader_Writer_json.write_changes(stock, bills, orders)
+            app_on = False
+            break
         elif(commands[0] == "order"):
             if(commands[1] == "new"):
-                o = orders.new()
+                o = orders.new(u)
             elif(commands[1] == "select"):
-                o = orders[int(commands[2]) - 1]
+                o = orders.find_order(commands[2])
             elif(commands[1] == "delete"):
                 orders.delete(int(commands[2]) - 1)
             elif(commands[1] == "add"):
@@ -120,11 +131,15 @@ while(app_on):
                     print("Wrong order selected")
                     continue
                 o.add_item(stock.find_item(commands[2]), int(commands[3]))
+                if sqlite_mode:
+                    Reader_Writer.write_order(o)
             elif(commands[1] == "remove"):
                 if(o == None):
                     print("Wrong order selected")
                     continue
-                o.remove_item(commands[2])
+                biID = o.remove_item(commands[2])
+                if sqlite_mode:
+                    Reader_Writer.delete_orderitem_by_id(biID)
             elif(commands[1] == "change"):
                 if(o == None):
                     print("Wrong order selected")
@@ -141,7 +156,7 @@ while(app_on):
                 print("Wrong input!")
                 continue
         elif(commands[0] == "help"):
-            print("Use with: [stock/bill/order]")
+            print("Use with: [stock/bill/order/quit/write]")
             print("stock help: ")
             print("\t new - Creates new item and adds it to stock")
             print("\t print - Prints stock")
@@ -163,9 +178,24 @@ while(app_on):
             print("\t remove [item] - Removes item from selected order")
             print("\t print - Prints selected order")
             print("\t printall - Prints all orders")
+            print("quit - Exits and saves")
+            print("write - Substracts all sales from stock, writes and exits")
         else:
             print("Wrong input!")
             continue
     except Exception as e:
-       print("e") 
-rw.write_all_and_clear(stock, bills, orders, users)
+        print(e) 
+    if i is not None:
+        if sqlite_mode:
+            Reader_Writer.write_item(i)
+    if b is not None:
+        if sqlite_mode:
+            Reader_Writer.write_bill(b)
+    if o is not None:
+        if sqlite_mode:
+            Reader_Writer.write_order(o)
+if sqlite_mode:
+    Reader_Writer.write_all_and_clear(stock, bills, orders, users)
+    Reader_Writer.close_connection()
+else:
+    Reader_Writer_json.write_all_and_clear(stock, bills, orders, users)
