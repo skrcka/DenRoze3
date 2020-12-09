@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, uic
 import sys
-from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders
+from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, sqlite_mode,Reader_Writer_json
 from DenRoze3_base_classes import Item, BillItem, Bill, DateCreator
 
 
@@ -13,8 +13,12 @@ class Ui(QtWidgets.QMainWindow):
         self.orders = Orders()
         self.users = Users()
 
-        Reader_Writer.init()
-        Reader_Writer.load_all(self.stock, self.bills, self.orders, self.users)
+        if sqlite_mode:
+            Reader_Writer.init()
+            Reader_Writer.load_all(self.stock, self.bills, self.orders, self.users)
+        else:
+            Reader_Writer_json.init()
+            Reader_Writer_json.load_all(self.stock, self.bills, self.orders, self.users)
 
         self.b = None
         self.o = None
@@ -78,21 +82,25 @@ class Ui(QtWidgets.QMainWindow):
         self.o.print()
     def bill_add_item(self):
         self.b.add_item(self.i, int(self.bills_widget.bill_item_count.text()))
-        Reader_Writer.write_bill(self.b)
+        if sqlite_mode:
+            Reader_Writer.write_bill(self.b)
         self.get_bill_items_list()
     def order_add_item(self):
         self.o.add_item(self.i, int(self.orders_widget.order_item_count.text()))
-        Reader_Writer.write_order(self.o)
+        if sqlite_mode:
+            Reader_Writer.write_order(self.o)
         self.get_order_items_list()
     def bill_remove_item(self):
         if self.b is not None:
             biID = self.b.remove_item_by_position(self.bills_widget.bill_items_list.currentRow())
-            Reader_Writer.delete_billitem_by_id(biID)
+            if sqlite_mode:
+                Reader_Writer.delete_billitem_by_id(biID)
             self.get_bill_items_list()
     def order_remove_item(self):
         if self.o is not None:
             biID = self.o.remove_item_by_position(self.orders_widget.bill_items_list.currentRow())
-            Reader_Writer.delete_orderitem_by_id(biID)
+            if sqlite_mode:
+                Reader_Writer.delete_orderitem_by_id(biID)
             self.get_order_items_list()
     def bill_new(self):
         self.b = self.bills.new()
@@ -146,13 +154,17 @@ class Ui(QtWidgets.QMainWindow):
         self.i.weight = float(self.stock_widget.stock_item_weight_edit.text())
         self.i.is_age_restricted = self.stock_widget.stock_item_is_age_restricted_edit.text()
         self.get_stock_list()
-        Reader_Writer.write_item(self.i)
+        if sqlite_mode:
+            Reader_Writer.write_item(self.i)
     def stock_new(self):
         self.stock.new("NEW ITEM", "", 0, 0, 0, 0, 0, False)
         self.get_stock_list()
     def closeEvent(self, event):
-        Reader_Writer.write_all_and_clear(self.stock, self.bills, self.orders, self.users)
-        Reader_Writer.close_connection()
+        if sqlite_mode:
+            Reader_Writer.write_all_and_clear(self.stock, self.bills, self.orders, self.users)
+            Reader_Writer.close_connection()
+        else:
+            Reader_Writer_json.write_all_and_clear(self.stock, self.bills, self.orders, self.users)
     def get_stock_list(self):
         self.stock_widget.stock_list.clear()
         self.bills_widget.stock_list.clear()

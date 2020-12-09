@@ -1,46 +1,57 @@
 [
   {
-    "id": 0,
-    "name": "vejce",
-    "code": "vesnica",
-    "price": 10.0,
+    "id": 2,
+    "name": "mys",
+    "code": "mouse",
+    "price": 149.0,
     "dph": 21,
-    "count": 9,
-    "mincount": 10,
+    "count": 20,
+    "mincount": 7,
+    "weight": 0.2,
+    "is_age_restricted": true
+  },
+  {
+    "id": 3,
+    "name": "klavesnice",
+    "code": "keyboard",
+    "price": 299.0,
+    "dph": 21,
+    "count": 8,
+    "mincount": 3,
     "weight": 0.5,
-    "is_age_restricted": false
+    "is_age_restricted": true
   },
   {
-    "id": 0,
-    "name": "pikao",
-    "code": "dubina",
-    "price": 60.0,
-    "dph": 21,
-    "count": 69,
-    "mincount": 10,
-    "weight": 0.5,
-    "is_age_restricted": false
+    "id": 4,
+    "name": "sleva",
+    "code": "sleva",
+    "price": -1.0,
+    "dph": 0,
+    "count": 0,
+    "mincount": 0,
+    "weight": 0.0,
+    "is_age_restricted": true
   },
   {
-    "id": 0,
-    "name": "mleko",
-    "code": "cow",
-    "price": 30.0,
-    "dph": 21,
-    "count": 1000,
-    "mincount": 10,
-    "weight": 1.0,
-    "is_age_restricted": false
-  },
-  {
-    "id": 0,
+    "id": 5,
     "name": "liquid",
     "code": "ego10",
     "price": 99.0,
     "dph": 21,
-    "count": 35,
-    "mincount": 25,
-    "weight": 10.0,
+    "count": 30,
+    "mincount": 50,
+    "weight": 0.1,
+    "is_age_restricted": true
+  },
+  {
+    "id": 6,
+    "name": "sluchatka",
+    "code": "headphones",
+    "price": 299.0,
+    "dph": 21,
+    "count": 5,
+    "mincount": 3,
+    "weight": 0.1,
     "is_age_restricted": true
   }
 ]

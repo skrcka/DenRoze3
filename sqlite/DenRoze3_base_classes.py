@@ -2,6 +2,21 @@ import os
 from datetime import datetime
 from pprint import pprint
 
+global sqlite_mode
+sqlite_mode = True
+
+class IDcreator:
+    def __init__(self):
+        self.id = 0
+    def getid(self):
+        self.id += 1
+        return self.id
+    def setmaxid(self, var):
+        maxid = 0
+        for v in var:
+            if v.id > maxid:
+                maxid = v.id
+        self.id = maxid
 
 class DateCreator:
     def getdate(self, day, month, year):
@@ -40,6 +55,8 @@ class Order:
         self.shipping_method = ""
         self.address = ""
         self.status = ""
+        if sqlite_mode == False:
+            self.idcreator = IDcreator()
     def count_totals(self):
         self.total = 0
         self.total_weight = 0
@@ -53,11 +70,18 @@ class Order:
     def load_item_db(self, id, item, count):
         self.items.append(BillItem(id, item, count))
     def add_item(self, item, count):
-        self.total += item.price * count
-        self.total_weight += item.weight * count
-        self.items.append(BillItem(0, item, count))
+        if sqlite_mode:
+            self.total += item.price * count
+            self.total_weight += item.weight * count
+            self.items.append(BillItem(0, item, count))
+        else:
+            self.total += item.price * count
+            self.total_weight += item.weight * count
+            self.items.append(BillItem(self.idcreator.getid(), item, count))
     def find_item(self, search_term):
         for i in self.items:
+            if(i.id == search_term):
+                return i
             if(i.item.id == search_term or i.item.name == search_term or i.item.code == search_term):
                 return i
         print("Item not found")
@@ -134,6 +158,8 @@ class Bill:
         self.payment_method = ""
         self.eet = ""
         self.is_sale = True
+        if sqlite_mode == False:
+            self.idcreator = IDcreator()
     def change_type(self):
         self.is_sale = not self.is_sale
     def count_totals(self):
@@ -141,8 +167,12 @@ class Bill:
         for item in self.items:
             self.total += float(item.item.price) * int(item.count)
     def add_item(self, item, count):
-        self.items.append(BillItem(0, item, int(count)))
-        self.total += item.price * int(count)
+        if sqlite_mode:
+            self.items.append(BillItem(0, item, int(count)))
+            self.total += item.price * int(count)
+        else:
+            self.items.append(BillItem(self.idcreator.getid(), item, int(count)))
+            self.total += item.price * int(count)
     def load_item(self, idbi, idi, name, code, price, dph, count, mincount, weight, is_age_restricted, sale_count):
         self.items.append(BillItem(int(idbi), Item(int(idi), name, code, float(price), int(dph), int(count), int(mincount), float(weight), bool(is_age_restricted)), sale_count))
         self.total += float(price) * int(sale_count)

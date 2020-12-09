@@ -1,1 +1,45 @@
-[]
+[
+  {
+    "id": 1,
+    "user": "<DenRoze3_base_classes.User object at 0x7f56e0e8ecd0>",
+    "items": [
+      {
+        "id": 1,
+        "item": {
+          "id": 3,
+          "name": "klavesnice",
+          "code": "keyboard",
+          "price": 299.0,
+          "dph": 21,
+          "count": 8,
+          "mincount": 3,
+          "weight": 0.5,
+          "is_age_restricted": true
+        },
+        "count": 1
+      },
+      {
+        "id": 2,
+        "item": {
+          "id": 5,
+          "name": "liquid",
+          "code": "ego10",
+          "price": 99.0,
+          "dph": 21,
+          "count": 30,
+          "mincount": 50,
+          "weight": 0.1,
+          "is_age_restricted": true
+        },
+        "count": 1
+      }
+    ],
+    "total": 398.0,
+    "total_weight": 0.6,
+    "date": "2020-12-09 13:50:52.977979",
+    "payment_method": "",
+    "shipping_method": "",
+    "address": "",
+    "status": ""
+  }
+]
