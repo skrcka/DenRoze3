@@ -1,55 +1,78 @@
 [
   {
-    "id": 2,
+    "id": 0,
     "items": [
       {
-        "id": 1,
+        "id": 0,
         "item": {
-          "id": 2,
-          "name": "mys",
-          "code": "mouse",
-          "price": 149.0,
+          "id": 0,
+          "name": "vejce",
+          "code": "vesnica",
+          "price": 10.0,
           "dph": 21,
-          "count": 20,
-          "mincount": 7,
-          "weight": 0.2,
+          "count": 9,
+          "mincount": 10,
+          "weight": 0.5,
+          "is_age_restricted": false
+        },
+        "count": 3
+      },
+      {
+        "id": 0,
+        "item": {
+          "id": 0,
+          "name": "mleko",
+          "code": "cow",
+          "price": 30.0,
+          "dph": 21,
+          "count": 1000,
+          "mincount": 10,
+          "weight": 1.0,
+          "is_age_restricted": false
+        },
+        "count": 2
+      }
+    ],
+    "total": 90.0,
+    "date": "2020-12-01 17:12:56.282294",
+    "payment_method": ""
+  },
+  {
+    "id": 0,
+    "items": [
+      {
+        "id": 0,
+        "item": {
+          "id": 0,
+          "name": "pikao",
+          "code": "dubina",
+          "price": 60.0,
+          "dph": 21,
+          "count": 69,
+          "mincount": 10,
+          "weight": 0.5,
+          "is_age_restricted": false
+        },
+        "count": 4
+      },
+      {
+        "id": 0,
+        "item": {
+          "id": 0,
+          "name": "liquid",
+          "code": "ego10",
+          "price": 99.0,
+          "dph": 21,
+          "count": 35,
+          "mincount": 25,
+          "weight": 10.0,
           "is_age_restricted": true
         },
         "count": 2
-      },
-      {
-        "id": 2,
-        "item": {
-          "id": 3,
-          "name": "klavesnice",
-          "code": "keyboard",
-          "price": 299.0,
-          "dph": 21,
-          "count": 8,
-          "mincount": 3,
-          "weight": 0.5,
-          "is_age_restricted": true
-        },
-        "count": 1
-      },
-      {
-        "id": 3,
-        "item": {
-          "id": 4,
-          "name": "sleva",
-          "code": "sleva",
-          "price": -1.0,
-          "dph": 0,
-          "count": 0,
-          "mincount": 0,
-          "weight": 0.0,
-          "is_age_restricted": true
-        },
-        "count": 100
       }
     ],
-    "total": 497.0,
-    "date": "2020-12-09 13:45:29.699627",
+    "total": 438.0,
+    "date": "2020-12-01 17:13:29.545204",
     "payment_method": ""
   }
 ]

@@ -1,49 +1,8 @@
 from datetime import datetime
-from DenRoze3_base_classes import Item, BillItem, Order, Bill, User, sqlite_mode, IDcreator
-from DenRoze3_bottom import Sqlite_db, Local_db
+from DenRoze3_base_classes import Item, BillItem, Order, Bill, User
+from DenRoze3_bottom import Sqlite_db
 from pprint import pprint as pprint
 
-class Reader_Writer_json:
-    def init():
-        Reader_Writer_json.local_db = Local_db()
-    def load_orders(orders):
-        Reader_Writer_json.local_db.load_orders(orders)
-    def write_orders(orders):
-        Reader_Writer_json.local_db.write_orders(orders)
-    def load_users(users):
-        Reader_Writer_json.local_db.load_users(users)
-    def write_users(users):
-        Reader_Writer_json.local_db.write_users(users)
-    def load_bills(bills):
-        Reader_Writer_json.local_db.load_bills(bills)
-    def write_bills(bills):
-        Reader_Writer_json.local_db.write_bills(bills)
-    def load_stock(stock):
-        Reader_Writer_json.local_db.load_stock(stock)
-    def write_stock(stock):
-        Reader_Writer_json.local_db.write_stock(stock)
-    def write_all_and_clear(stock, bills, orders, users):
-        Reader_Writer_json.local_db.write_bills(bills)
-        Reader_Writer_json.local_db.write_stock(stock)
-        Reader_Writer_json.local_db.write_orders(orders)
-        Reader_Writer_json.local_db.write_users(users)
-        stock.clear()
-        bills.clear()
-        orders.clear()
-        users.clear()
-    def load_all(stock, bills, orders, users):
-        Reader_Writer_json.local_db.load_users(users)
-        Reader_Writer_json.local_db.load_stock(stock)
-        Reader_Writer_json.local_db.load_bills(bills)
-        Reader_Writer_json.local_db.load_orders(orders, users)
-        for bill in bills:
-            for item in bill.items:
-                item.item = stock.find_item(item.item.id)
-            bill.count_totals()
-        for order in orders:
-            for item in order.items:
-                item = stock.find_item(item.id)
-            order.count_totals()
 
 class Reader_Writer:
     def init():
@@ -116,7 +75,7 @@ class Reader_Writer:
             else:
                 Reader_Writer.sqlite_db.update_order(order, order.user.id)
             for billitem in order.items:
-                Reader_Writer.write_orderitem(billitem, order.id)
+                Reader_Writer.sqlite_db.update_orderitem(billitem, order.id)
     def write_orders(orders):
         for order in orders:
             Reader_Writer.write_order(order)
@@ -215,18 +174,10 @@ class Reader_Writer:
 class Orders:
     def __init__(self):
         self.orders = []
-        if sqlite_mode == False:
-            self.idcreator = IDcreator()
     def new(self, user):
-        if sqlite_mode:
-            order = Order(0, user)
-            self.orders.append(order)
-            Reader_Writer.write_order(order)
-            return order
-        else:
-            order = Order(self.idcreator.getid(), user)
-            self.orders.append(order)
-            return order
+        order = Order(0, user)
+        self.orders.append(order)
+        return order
     def add(self, order):
         self.orders.append(order)
     def load(self, id, user, total, total_weight, date, payment_method, shipping_method, address, status):
@@ -246,8 +197,7 @@ class Orders:
         if(o == None):
             return
         index = self.orders.index(o)
-        if sqlite_mode:
-            Reader_Writer.delete_order(o)
+        Reader_Writer.delete_order(o)
         del self.orders[index]
     def find_order(self, search_term):
         for o in self.orders:
@@ -268,18 +218,10 @@ class Orders:
 class Bills:
     def __init__(self):
         self.bills = []
-        if sqlite_mode == False:
-            self.idcreator = IDcreator()
     def new(self):
-        if sqlite_mode:
-            bill = Bill(0)
-            self.bills.append(bill)
-            Reader_Writer.write_bill(bill)
-            return bill
-        else:
-            bill = Bill(self.idcreator.getid())
-            self.bills.append(bill)
-            return bill
+        bill = Bill(0)
+        self.bills.append(bill)
+        return bill
     def add(self, bill):
         self.bills.append(bill)
     def load(self, id, total, date, payment_method, eet, is_sale):
@@ -296,8 +238,7 @@ class Bills:
         if(b == None):
             return
         index = self.bills.index(b)
-        if sqlite_mode:
-            Reader_Writer.delete_bill(b)
+        Reader_Writer.delete_bill(b)
         del self.bills[index]
     def find_bill(self, search_term):
         for b in self.bills:
@@ -318,13 +259,8 @@ class Bills:
 class Users:
     def __init__(self):
         self.users = []
-        if sqlite_mode == False:
-            self.idcreator = IDcreator()
     def new(self, name, real_name, password, phone, email, is_employee, is_manager):
-        if sqlite_mode:
-            self.users.append(User(0, name, real_name, password, phone, email, is_employee, is_manager))
-        else:
-            self.users.append(User(self.idcreator.getid(), name, real_name, password, phone, email, is_employee, is_manager))
+        self.users.append(User(0, name, real_name, password, phone, email, is_employee, is_manager))
     def load(self, id, name, real_name, password, phone, email, is_employee, is_manager):
         self.users.append(User(int(id), name, real_name, password, phone, email, bool(is_employee), bool(is_manager)))
     def add(self, user):
@@ -357,28 +293,20 @@ class Users:
 class Stock:
     def __init__(self):
         self.stock = []  
-        if sqlite_mode == False:
-            self.idcreator = IDcreator()
     def load(self, id, name, code, price, dph, count, mincount, weight, is_age_restricted):
         self.stock.append(Item(int(id), name, code, float(price), int(dph), int(count), int(mincount), float(weight), bool(is_age_restricted)))
     def add(self, item):
         self.stock.append(item)
     def new(self, name, code, price, dph, count, mincount, weight, is_age_restricted):
-        if sqlite_mode:
-            item = Item(0, name, code, price, dph, count, mincount, weight, is_age_restricted)
-            self.stock.append(item)
-            Reader_Writer.write_item(item)
-            return item
-        else:
-            item = Item(self.idcreator.getid(), name, code, price, dph, count, mincount, weight, is_age_restricted)
-            self.stock.append(item)
-            return item
+        item = Item(0, name, code, price, dph, count, mincount, weight, is_age_restricted)
+        self.stock.append(item)
+        Reader_Writer.write_item(item)
+        return item
     def delete(self, search_term):
         i = self.find_item(search_term)
         if i is None:
             return
-        if sqlite_mode:
-            Reader_Writer.delete_item(i)
+        Reader_Writer.delete_item(i)
         index = self.stock.index(i)
         del self.stock[index]
     def __setitem__(self, number, data):

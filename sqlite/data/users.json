@@ -1,5 +1,4 @@
-[
-  {
+[{
     "id": 0,
     "name": "skrcka",
     "real_name": "Adam K",
@@ -8,5 +7,4 @@
     "email": "email@email.com",
     "is_employee": true,
     "is_manager": false
-  }
-]
+}]

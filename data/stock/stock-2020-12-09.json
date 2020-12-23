@@ -5,10 +5,10 @@
     "code": "mouse",
     "price": 149.0,
     "dph": 21,
-    "count": 15,
+    "count": 10,
     "mincount": 7,
     "weight": 0.2,
-    "is_age_restricted": true
+    "is_age_restricted": "True"
   },
   {
     "id": 3,
@@ -16,7 +16,7 @@
     "code": "keyboard",
     "price": 299.0,
     "dph": 21,
-    "count": 7,
+    "count": 5,
     "mincount": 3,
     "weight": 0.5,
     "is_age_restricted": true
@@ -38,7 +38,7 @@
     "code": "ego10",
     "price": 99.0,
     "dph": 21,
-    "count": 30,
+    "count": 28,
     "mincount": 50,
     "weight": 0.1,
     "is_age_restricted": true
@@ -49,7 +49,7 @@
     "code": "headphones",
     "price": 299.0,
     "dph": 21,
-    "count": 5,
+    "count": 4,
     "mincount": 3,
     "weight": 0.1,
     "is_age_restricted": true

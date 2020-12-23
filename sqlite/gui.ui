@@ -120,7 +120,7 @@
      </widget>
     </item>
     <item row="0" column="5">
-     <widget class="QWidget" name="orders_widget" native="true">
+     <widget class="QWidget" name="order_widget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>0</horstretch>

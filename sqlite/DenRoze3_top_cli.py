@@ -1,5 +1,5 @@
 from pprint import pprint
-from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders, sqlite_mode, Reader_Writer_json
+from DenRoze3_middle import Reader_Writer, Stock, Bills, Users, Orders
 from DenRoze3_base_classes import Item, BillItem, Bill, DateCreator
     
 stock = Stock()
@@ -7,12 +7,8 @@ bills = Bills()
 orders = Orders()
 users = Users()
 
-if sqlite_mode:
-    Reader_Writer.init()
-    Reader_Writer.load_all(stock, bills, orders, users)
-else:
-    Reader_Writer_json.init()
-    Reader_Writer_json.load_all(stock, bills, orders, users)
+Reader_Writer.init()
+Reader_Writer.load_all(stock, bills, orders, users)
 
 app_on = True
 b = None
@@ -100,8 +96,7 @@ while(app_on):
                     print("Wrong bill selected")
                     continue
                 biID = b.remove_item(commands[2])
-                if sqlite_mode:
-                    Reader_Writer.delete_billitem_by_id(biID)
+                Reader_Writer.delete_billitem_by_id(biID)
             elif(commands[1] == "print"):
                 if(b == None):
                     print("Wrong bill selected")
@@ -124,15 +119,13 @@ while(app_on):
                     print("Wrong order selected")
                     continue
                 o.add_item(stock.find_item(commands[2]), int(commands[3]))
-                if sqlite_mode:
-                    Reader_Writer.write_order(o)
+                Reader_Writer.write_order(o)
             elif(commands[1] == "remove"):
                 if(o == None):
                     print("Wrong order selected")
                     continue
                 biID = o.remove_item(commands[2])
-                if sqlite_mode:
-                    Reader_Writer.delete_orderitem_by_id(biID)
+                Reader_Writer.delete_orderitem_by_id(biID)
             elif(commands[1] == "change"):
                 if(o == None):
                     print("Wrong order selected")
@@ -177,16 +170,10 @@ while(app_on):
     except Exception as e:
         print(e) 
     if i is not None:
-        if sqlite_mode:
-            Reader_Writer.write_item(i)
+        Reader_Writer.write_item(i)
     if b is not None:
-        if sqlite_mode:
-            Reader_Writer.write_bill(b)
+        Reader_Writer.write_bill(b)
     if o is not None:
-        if sqlite_mode:
-            Reader_Writer.write_order(o)
-if sqlite_mode:
-    Reader_Writer.write_all_and_clear(stock, bills, orders, users)
-    Reader_Writer.close_connection()
-else:
-    Reader_Writer_json.write_all_and_clear(stock, bills, orders, users)
+        Reader_Writer.write_order(o)
+Reader_Writer.write_all_and_clear(stock, bills, orders, users)
+Reader_Writer.close_connection()
