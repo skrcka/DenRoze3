@@ -13,7 +13,7 @@ class Ui(QtWidgets.QMainWindow):
         self.orders = Orders()
         self.users = Users()
 
-        if sqlite_mode:
+        if not sqlite_mode:
             Reader_Writer.init()
             Reader_Writer.load_all(self.stock, self.bills, self.orders, self.users)
         else:
